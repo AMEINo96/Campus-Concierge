@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+@theme {
+  --color-primary: #0A2540;
+  --color-secondary: #1E3A8A;
+  --color-accent: #3B82F6;
+  --color-background: #F8FAFC;
+  --color-border: #E2E8F0;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+  
+  --font-public-sans: var(--font-public-sans);
+  --font-space-grotesk: var(--font-space-grotesk);
+}
+
+:root {
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+}
+
+.dark {
+  --background: #0F172A;
+  --foreground: #F8FAFC;
+}
+
+html.theme-nust-exclusive,
+:root[data-theme="nust-exclusive"] {
+  --background: #E8F1F8;
+  --foreground: #11213D;
+}
+
+@custom-variant nust (&:is(.theme-nust-exclusive *));
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-public-sans), sans-serif;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* ========================================
+   BENTO CARD SYSTEM — Light + Dark
+   ======================================== */
+
+.bento-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+  transition: all 200ms ease;
+}
+
+.bento-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(2, 6, 23, 0.1);
+}
+
+.bento-card-light {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 10px 30px rgba(2, 6, 23, 0.06);
+  transition: all 200ms ease;
+}
+
+.bento-card-light:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(2, 6, 23, 0.1);
+}
+
+/* Dark overrides for bento cards */
+.dark .bento-card,
+.dark .bento-card-light {
+  background-color: #1E293B;
+  border-color: #334155;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.theme-nust-exclusive .bento-card,
+.theme-nust-exclusive .bento-card-light {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(24, 118, 181, 0.3);
+}
+
+.dark .bento-card:hover,
+.dark .bento-card-light:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-primary {
+  background: linear-gradient(135deg, #3B82F6, #60A5FA);
+  color: #ffffff;
+  border-radius: 12px;
+  transition: all 200ms ease;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* ========================================
+   INPUT FIELDS
+   ======================================== */
+
+.input-field {
+  background-color: #F1F5F9;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  transition: all 200ms ease;
+  outline: none;
+  color: #0F172A;
+}
+
+.input-field:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.dark .input-field {
+  background-color: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .input-field:focus {
+  border-color: #3B82F6;
+}
