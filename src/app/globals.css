@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-primary: #0A2540;
+  --color-secondary: #1E3A8A;
+  --color-accent: #3B82F6;
+  --color-background: #F8FAFC;
+  --color-border: #E2E8F0;
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #64748B;
+
+  --font-public-sans: var(--font-public-sans);
+  --font-space-grotesk: var(--font-space-grotesk);
+}
+
+:root {
+  --background: #F7FAFC;
+  --foreground: #0F172A;
+}
+
+.dark {
+  --background: #0F172A;
+  --foreground: #F7FAFC;
+}
+
+html.theme-nust-exclusive,
+:root[data-theme="nust-exclusive"] {
+  --background: #E8F1F8;
+  --foreground: #11213D;
+}
+
+@custom-variant nust (&:is(.theme-nust-exclusive *));
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-public-sans), sans-serif;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+/* ========================================
+   BENTO CARD SYSTEM — Unified Surface Language
+   ======================================== */
+
+.bento-card,
+.bento-card-light {
+  background-color: #FFFFFF;
+  padding: 16px;
+  @media (min-width: 768px) {
+    padding: 24px;
+  }
+  border-radius: 22px;
+  border: 1px solid #E6EEF8;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+  transition: all 250ms ease-in-out;
+  cursor: pointer;
+}
+
+.bento-card:hover,
+.bento-card-light:hover {
+  transform: translateY(-2px);
+  background-color: #F8FAFC;
+  border-color: #BFDBFE;
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+}
+
+/* Dark overrides for bento cards */
+.dark .bento-card,
+.dark .bento-card-light {
+  background-color: #1E293B;
+  border-color: #334155;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.theme-nust-exclusive .bento-card,
+.theme-nust-exclusive .bento-card-light {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(24, 118, 181, 0.3);
+}
+
+.dark .bento-card:hover,
+.dark .bento-card-light:hover {
+  background-color: #1e293b;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn-primary {
+  background: #2563EB;
+  color: #ffffff;
+  border-radius: 12px;
+  transition: all 250ms ease-in-out;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  background: #1D4ED8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+/* ========================================
+   INPUT FIELDS
+   ======================================== */
+
+.input-field {
+  background-color: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  transition: all 250ms ease-in-out;
+  outline: none;
+  color: #0F172A;
+  font-size: 15px;
+}
+
+.input-field:focus {
+  background-color: #FFFFFF;
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.dark .input-field {
+  background-color: #0F172A;
+  color: #F8FAFC;
+  border-color: #334155;
+}
+
+.dark .input-field:focus {
+  border-color: #3B82F6;
+}

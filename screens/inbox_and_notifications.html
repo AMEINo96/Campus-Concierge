@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inbox - Campus Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"surface-dim": "#d7dae3", surface: "#f9f9ff", "secondary-container": "#b6d0ff", "surface-container-lowest": "#ffffff", "surface-container-high": "#e6e8f1", "on-tertiary-container": "#0d0300", "inverse-primary": "#aac7ff", "surface-tint": "#005db8", "primary-fixed": "#d6e3ff", "on-tertiary-fixed": "#321200", "on-secondary-container": "#3f5881", "on-primary-fixed-variant": "#00458d", "on-tertiary-fixed-variant": "#763400", "on-secondary-fixed": "#001b3d", "inverse-on-surface": "#eef0fa", "tertiary-container": "#c05900", "on-secondary": "#ffffff", "on-surface": "#181c22", "on-primary": "#ffffff", primary: "#005cb8", "inverse-surface": "#2d3037", background: "#f9f9ff", "error-container": "#ffdad6", "surface-bright": "#f9f9ff", "tertiary-fixed": "#ffdbc9", "outline-variant": "#c1c6d5", "on-secondary-fixed-variant": "#2d476f", "tertiary-fixed-dim": "#ffb68c", "secondary-fixed-dim": "#aec7f7", error: "#ba1a1a", "on-error-container": "#93000a", "surface-container-low": "#f1f3fc", "on-primary-fixed": "#001b3e", "primary-container": "#1275e2", "surface-variant": "#e0e2eb", "on-error": "#ffffff", secondary: "#465f88", "surface-container-highest": "#e0e2eb", "secondary-fixed": "#d6e3ff", "on-tertiary": "#ffffff", "surface-container": "#ebedf7", outline: "#717785", "primary-fixed-dim": "#aac7ff", "on-primary-container": "#000512", "on-surface-variant": "#414753", "on-background": "#181c22", tertiary: "#9a4600"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"section-margin": "48px", "container-padding": "24px", "bento-gap": "16px", base: "8px", md: "16px", lg: "24px", xl: "32px", xs: "4px", sm: "8px", gutter: "16px", margin: "24px"}, fontFamily: {"status-tag": ["Space Grotesk"], "label-caps": ["Space Grotesk"], "body-md": ["Inter"], "body-lg": ["Inter"], h2: ["Public Sans"], h1: ["Public Sans"], "headline-md": ["Inter"], "label-md": ["Inter"], "headline-lg": ["Inter"]}, fontSize: {"status-tag": ["13px", {lineHeight: "1.2", fontWeight: "500"}], "label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], h2: ["28px", {lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600"}], h1: ["40px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700"}], "headline-md": ["24px", {lineHeight: "32px", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "16px", fontWeight: "500"}], "headline-lg": ["32px", {lineHeight: "40px", fontWeight: "600"}]}}}};</script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-[100px] pt-[80px]">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm dark:shadow-none transition-all duration-200 ease-in-out active:scale-95">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-surface-variant overflow-hidden flex-shrink-0">
+<img alt="Student profile avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDh-SGS2PK6URxXWLClK1u2NXND_IC1gf4UQ9yTHCGlOYrRSXUnyvSqEWtIHrBG5zBerUp2-znNXRZ-fsaySrSTYB7nmCHmiCK_csfAsJAbDDqD801qxgaMVBpOkXMgOZw3GVHwdJyyVp6d3nHY_cIs2RLsRml-l9GuiOLAmsTrdTQ687suj-JUn-IM6C8Vxq21DCEXwyCR_-nKhvyvCdAXCk-q5APZBSYtBJJ1RGW8ZteysYh548BJCwzr_i_RsqHf8q98gvjd1rDJ"/>
+</div>
+<h1 class="font-['Public_Sans'] font-bold tracking-tight text-lg font-black text-slate-900 dark:text-white uppercase tracking-wider">Campus Concierge</h1>
+</div>
+<button class="text-sky-500 dark:text-sky-400 hover:bg-slate-50 dark:hover:bg-slate-800 p-2 rounded-full transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="max-w-3xl mx-auto px-4 md:px-6">
+<div class="mb-section-margin">
+<h2 class="font-h1 text-h1 mb-6 mt-4">Inbox</h2>
+<!-- Filter Chips -->
+<div class="flex overflow-x-auto gap-3 pb-2 scrollbar-hide -mx-4 px-4 md:mx-0 md:px-0">
+<button class="flex-shrink-0 bg-primary text-on-primary rounded-full px-5 py-2 font-status-tag text-status-tag whitespace-nowrap">All</button>
+<button class="flex-shrink-0 bg-surface-container-high text-on-surface hover:bg-surface-variant border border-outline-variant rounded-full px-5 py-2 font-status-tag text-status-tag whitespace-nowrap transition-colors">Unread</button>
+<button class="flex-shrink-0 bg-surface-container-high text-on-surface hover:bg-surface-variant border border-outline-variant rounded-full px-5 py-2 font-status-tag text-status-tag whitespace-nowrap transition-colors">Resolved</button>
+</div>
+</div>
+<!-- Notification Feed (Bento Style) -->
+<div class="grid grid-cols-1 gap-bento-gap">
+<!-- Banner Ad / Announcement using provided image -->
+<!-- Card 1: Maintenance -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding border border-on-surface/10 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-surface-variant flex items-center justify-center border border-on-surface/5">
+<span class="material-symbols-outlined text-on-surface font-bold text-2xl">build</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-h2 text-body-lg font-semibold text-on-surface">Hostel Repair Updated</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap ml-2">2m ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Your maintenance request has been updated.</p>
+<span class="inline-block px-3 py-1 rounded-full font-status-tag text-status-tag bg-tertiary-fixed/30 text-on-tertiary-fixed-variant border border-tertiary-fixed/20">In Progress</span>
+</div>
+</div>
+<!-- Card 2: Document -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding border border-primary-fixed border-opacity-50 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-primary-fixed/30 flex items-center justify-center border border-primary-fixed">
+<span class="material-symbols-outlined text-primary font-bold text-2xl">school</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-h2 text-body-lg font-semibold text-on-surface">Transcript Ready</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap ml-2">1h ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Pick up your document at the registrar.</p>
+<span class="inline-block px-3 py-1 rounded-full font-status-tag text-status-tag bg-primary-fixed/30 text-on-primary-fixed-variant border border-primary-fixed/20">Completed</span>
+</div>
+</div>
+<!-- Card 3: Fee Reminder -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding border border-error-container border-opacity-50 shadow-sm hover:shadow-md transition-shadow flex items-start gap-4">
+<div class="flex-shrink-0 w-12 h-12 rounded-lg bg-error-container/30 flex items-center justify-center border border-error-container">
+<span class="material-symbols-outlined text-error font-bold text-2xl">mail</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h3 class="font-h2 text-body-lg font-semibold text-on-surface">Fee Reminder</h3>
+<span class="font-label-caps text-label-caps text-on-surface-variant whitespace-nowrap ml-2">Yesterday</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mb-3">Semester fees are due soon.</p>
+<span class="inline-block px-3 py-1 rounded-full font-status-tag text-status-tag bg-error-container text-on-error-container border border-error-container/20">Action Required</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-end px-4 pb-4 h-24 bg-white/95 backdrop-blur-md rounded-t-3xl shadow-[0_-8px_30px_rgb(0,0,0,0.04)] border-t border-slate-100">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-slate-700 w-16 py-2 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">grid_view</span>
+<span class="font-label-caps text-[10px] uppercase font-bold tracking-wider">Home</span>
+</a>
+<!-- Requests -->
+<a class="flex flex-col items-center justify-center text-slate-700 w-16 py-2 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">view_list</span>
+<span class="font-label-caps text-[10px] uppercase font-bold tracking-wider">Requests</span>
+</a>
+<!-- Create (FAB) -->
+<a class="relative -top-8 flex flex-col items-center group" href="#">
+<div class="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/30 border-4 border-white transition-transform group-active:scale-90">
+<span class="material-symbols-outlined text-4xl font-light">add</span>
+</div>
+</a>
+<!-- Inbox -->
+<a class="flex flex-col items-center justify-center text-slate-700 w-16 py-2 transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined text-2xl mb-1">mail</span>
+<span class="font-label-caps text-[10px] uppercase font-bold tracking-wider">Inbox</span>
+</a>
+<!-- Profile (Active) -->
+<a class="flex flex-col items-center justify-center bg-sky-50 text-primary w-20 py-2 rounded-2xl transition-all active:scale-95" href="#">
+<span class="material-symbols-outlined fill text-2xl mb-1">person</span>
+<span class="font-label-caps text-[10px] uppercase font-bold tracking-wider">Profile</span>
+</a>
+</nav>
+</body></html>

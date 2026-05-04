@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-width=1.0" name="viewport"/>
+<title>INBOX &amp; NOTIFICATIONS</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&amp;family=Space+Grotesk:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+  }
+</style>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+                "primary-fixed-dim": "#7fd0ff",
+                "tertiary-fixed-dim": "#cccd00",
+                "secondary": "#5e5e5e",
+                "on-error-container": "#93000a",
+                "inverse-surface": "#2f3130",
+                "surface-container": "#eeeeed",
+                "on-primary-container": "#003950",
+                "surface-container-lowest": "#ffffff",
+                "secondary-fixed": "#e2e2e2",
+                "on-secondary-fixed": "#1b1b1b",
+                "inverse-primary": "#7fd0ff",
+                "tertiary-fixed": "#e8ea1b",
+                "on-tertiary-container": "#363700",
+                "surface-variant": "#e2e2e2",
+                "on-tertiary-fixed": "#1d1d00",
+                "surface": "#f9f9f8",
+                "secondary-container": "#e2e2e2",
+                "on-secondary-container": "#646464",
+                "on-error": "#ffffff",
+                "inverse-on-surface": "#f1f1f0",
+                "outline": "#6e7880",
+                "on-secondary": "#ffffff",
+                "primary-container": "#15a8e3",
+                "on-primary-fixed": "#001e2d",
+                "primary": "#00658b",
+                "on-primary": "#ffffff",
+                "surface-dim": "#dadad9",
+                "on-tertiary-fixed-variant": "#494900",
+                "surface-container-low": "#f3f4f3",
+                "primary-fixed": "#c5e7ff",
+                "surface-tint": "#00658b",
+                "error-container": "#ffdad6",
+                "outline-variant": "#bdc8d1",
+                "on-secondary-fixed-variant": "#474747",
+                "tertiary": "#616200",
+                "surface-bright": "#f9f9f8",
+                "secondary-fixed-dim": "#c6c6c6",
+                "on-surface": "#1a1c1c",
+                "on-surface-variant": "#3e484f",
+                "on-tertiary": "#ffffff",
+                "surface-container-high": "#e8e8e7",
+                "error": "#ba1a1a",
+                "background": "#f9f9f8",
+                "surface-container-highest": "#e2e2e2",
+                "on-background": "#1a1c1c",
+                "tertiary-container": "#a1a300",
+                "on-primary-fixed-variant": "#004c6a"
+        },
+        "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+        },
+        "spacing": {
+                "section-margin": "48px",
+                "bento-gap": "16px",
+                "base": "8px",
+                "container-padding": "24px"
+        },
+        "fontFamily": {
+                "status-tag": [
+                        "Space Grotesk"
+                ],
+                "h2": [
+                        "Public Sans"
+                ],
+                "body-md": [
+                        "Public Sans"
+                ],
+                "label-caps": [
+                        "Space Grotesk"
+                ],
+                "body-lg": [
+                        "Public Sans"
+                ],
+                "h1": [
+                        "Public Sans"
+                ]
+        },
+        "fontSize": {
+                "status-tag": [
+                        "13px",
+                        {
+                                "lineHeight": "1.2",
+                                "fontWeight": "500"
+                        }
+                ],
+                "h2": [
+                        "28px",
+                        {
+                                "lineHeight": "1.3",
+                                "letterSpacing": "-0.01em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-md": [
+                        "16px",
+                        {
+                                "lineHeight": "1.5",
+                                "fontWeight": "400"
+                        }
+                ],
+                "label-caps": [
+                        "12px",
+                        {
+                                "lineHeight": "1",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "600"
+                        }
+                ],
+                "body-lg": [
+                        "18px",
+                        {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                        }
+                ],
+                "h1": [
+                        "40px",
+                        {
+                                "lineHeight": "1.2",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                        }
+                ]
+        }
+},
+    },
+  }
+</script>
+</head>
+<body class="bg-background text-on-background min-h-screen pt-16 pb-24 font-body-md">
+<!-- TopAppBar -->
+<header class="bg-white dark:bg-slate-950 flex justify-between items-center px-6 h-16 w-full fixed top-0 z-50 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center">
+<span class="text-sky-500 dark:text-sky-400 font-['Public_Sans'] font-bold tracking-tight text-lg font-black tracking-widest">CAMPUS CONCIERGE</span>
+</div>
+<button class="text-sky-500 dark:text-sky-400 hover:opacity-80 transition-opacity scale-95 active:duration-100 p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="max-w-3xl mx-auto px-4 mt-8">
+<div class="mb-8">
+<h1 class="font-h1 text-h1 text-on-surface">Inbox</h1>
+</div>
+<!-- Filter Chips -->
+<div class="flex gap-2 overflow-x-auto pb-4 mb-4 scrollbar-hide">
+<button class="font-status-tag text-status-tag px-4 py-2 rounded-full bg-primary-container text-on-primary border border-primary-container whitespace-nowrap">All</button>
+<button class="font-status-tag text-status-tag px-4 py-2 rounded-full bg-surface-container text-on-surface-variant border border-outline-variant whitespace-nowrap hover:bg-surface-container-highest transition-colors">LMS Updates</button>
+<button class="font-status-tag text-status-tag px-4 py-2 rounded-full bg-surface-container text-on-surface-variant border border-outline-variant whitespace-nowrap hover:bg-surface-container-highest transition-colors">Qalam Alerts</button>
+</div>
+<!-- Feed -->
+<div class="flex flex-col gap-bento-gap">
+<!-- LMS Alert Card -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding shadow-sm border border-outline-variant flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-[#EADDFF] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#4F378B]" data-weight="fill">upload_file</span>
+</div>
+<div class="flex-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase">LMS UPDATE</p>
+<h3 class="font-h2 text-body-lg text-on-surface mb-2">Lecture Slides Uploaded</h3>
+<p class="text-body-md text-on-surface-variant mb-3">CS 101 slides for Week 4 are now available.</p>
+</div>
+<div class="self-end mt-auto text-right">
+<span class="font-status-tag text-status-tag text-on-surface-variant">10m ago</span>
+</div>
+</div>
+<!-- Qalam Alert Card -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding shadow-sm border border-outline-variant flex items-start gap-4">
+<div class="w-12 h-12 rounded-full bg-[#C4EED0] flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#0F5223]" data-weight="fill">grade</span>
+</div>
+<div class="flex-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase">QALAM ALERT</p>
+<h3 class="font-h2 text-body-lg text-on-surface mb-2">Midterm Grade Posted</h3>
+<p class="text-body-md text-on-surface-variant">Your grade for MATH 202 Midterm has been published to the portal.</p>
+</div>
+<div class="self-end mt-auto text-right">
+<span class="font-status-tag text-status-tag text-on-surface-variant">1h ago</span>
+</div>
+</div>
+<!-- Generic Message Card -->
+<div class="bg-surface-container-lowest rounded-xl p-container-padding shadow-sm border border-outline-variant flex items-start gap-4 opacity-70">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant" data-weight="fill">mail</span>
+</div>
+<div class="flex-1">
+<p class="font-label-caps text-label-caps text-on-surface-variant mb-1 uppercase">CAMPUS ANNOUNCEMENT</p>
+<h3 class="font-h2 text-body-lg text-on-surface mb-2">Library Hours Extended</h3>
+<p class="text-body-md text-on-surface-variant">The main library will be open 24/7 starting next week for finals.</p>
+</div>
+<div class="self-end mt-auto text-right">
+<span class="font-status-tag text-status-tag text-on-surface-variant">1d ago</span>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 h-20 pb-safe bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-[0_-4px_20px_0_rgba(0,0,0,0.05)] md:hidden">
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1 hover:text-sky-600 dark:hover:text-sky-300 transition-colors Active: scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter mt-1">Chat</span>
+</a>
+<a class="flex flex-col items-center justify-center text-sky-500 dark:text-sky-400 bg-sky-50 dark:bg-sky-900/30 rounded-xl px-4 py-1 hover:text-sky-600 dark:hover:text-sky-300 transition-colors Active: scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter mt-1">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 px-4 py-1 hover:text-sky-600 dark:hover:text-sky-300 transition-colors Active: scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+<span class="text-[10px] font-bold uppercase tracking-tighter mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

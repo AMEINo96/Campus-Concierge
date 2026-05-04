@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>My Requests - Campus Concierge</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {colors: {"on-background": "#181c22", "on-primary-container": "#000512", "on-tertiary": "#ffffff", background: "#f9f9ff", "tertiary-fixed": "#ffdbc9", "surface-bright": "#f9f9ff", surface: "#f9f9ff", "surface-dim": "#d7dae3", "tertiary-container": "#c05900", "on-tertiary-fixed-variant": "#763400", secondary: "#465f88", "inverse-surface": "#2d3037", tertiary: "#9a4600", "primary-container": "#1275e2", error: "#ba1a1a", "on-primary-fixed-variant": "#00458d", "surface-container-lowest": "#ffffff", "inverse-primary": "#aac7ff", "secondary-fixed": "#d6e3ff", "error-container": "#ffdad6", "on-tertiary-container": "#0d0300", "inverse-on-surface": "#eef0fa", "surface-tint": "#005db8", outline: "#717785", "on-secondary-fixed": "#001b3d", "outline-variant": "#c1c6d5", "surface-variant": "#e0e2eb", "tertiary-fixed-dim": "#ffb68c", "surface-container-highest": "#e0e2eb", "on-primary-fixed": "#001b3e", "on-tertiary-fixed": "#321200", "on-error": "#ffffff", "on-secondary-fixed-variant": "#2d476f", "secondary-container": "#b6d0ff", "on-error-container": "#93000a", "surface-container-low": "#f1f3fc", "on-surface": "#181c22", "on-primary": "#ffffff", "primary-fixed-dim": "#aac7ff", primary: "#005cb8", "surface-container": "#ebedf7", "primary-fixed": "#d6e3ff", "on-surface-variant": "#414753", "on-secondary-container": "#3f5881", "surface-container-high": "#e6e8f1", "on-secondary": "#ffffff", "secondary-fixed-dim": "#aec7f7"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {"container-padding": "24px", "section-margin": "48px", base: "8px", "bento-gap": "16px", md: "16px", lg: "24px", xl: "32px", xs: "4px", sm: "8px", gutter: "16px", margin: "24px"}, fontFamily: {"label-caps": ["Space Grotesk"], "status-tag": ["Space Grotesk"], h1: ["Public Sans"], "body-lg": ["Inter"], h2: ["Public Sans"], "body-md": ["Inter"], "headline-md": ["Inter"], "label-md": ["Inter"], "headline-lg": ["Inter"]}, fontSize: {"label-caps": ["12px", {lineHeight: "1", letterSpacing: "0.05em", fontWeight: "600"}], "status-tag": ["13px", {lineHeight: "1.2", fontWeight: "500"}], h1: ["40px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700"}], "body-lg": ["16px", {lineHeight: "24px", fontWeight: "400"}], h2: ["28px", {lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600"}], "body-md": ["14px", {lineHeight: "20px", fontWeight: "400"}], "headline-md": ["24px", {lineHeight: "32px", fontWeight: "600"}], "label-md": ["12px", {lineHeight: "16px", fontWeight: "500"}], "headline-lg": ["32px", {lineHeight: "40px", fontWeight: "600"}]}}}};</script>
+<style>
+        body { background-color: theme('colors.background'); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .material-symbols-outlined[data-weight="fill"] { font-variation-settings: 'FILL' 1; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-background min-h-screen flex flex-col pb-24 md:pb-0 pt-20">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-4 bg-slate-50/90 dark:bg-slate-950/90 backdrop-blur-md font-['Public_Sans'] font-semibold text-lg border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<img alt="Student Profile Photo" class="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A close-up, soft-focus headshot of a student in a warm, inviting light. The image embodies a modern, premium aesthetic suitable for a sleek campus portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3jMfEeDBd6UZyTWKUmJwSHlgf1OS9iFD3wpzfKPmM2HTXDdpGZubhHjLCS2HSsFih4snVT3l5e6LWO4EXIafTGnAM4gv-HfpeOox8XnB5oZVZPcNxwMI8lXgNniAuiXS6gyN7Ra40-PWwUPucZ6RSCqX1wK0w5s-sfzciufHl5mKKwMUzY0VF4ufv5E0Ay6--Su4JLUtdQ4X-dYGMJFswa7hbF98tfcCNH8_yOfVcwB9nUzdkwPWNI7jVecSUq4E8YIT67KEZuGF4"/>
+<span class="font-['Public_Sans'] font-black tracking-tight text-slate-900 dark:text-slate-50">Campus Concierge</span>
+</div>
+<button class="hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors p-2 rounded-full text-emerald-700 dark:text-emerald-400">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-4xl mx-auto px-4 md:px-6 py-section-margin flex flex-col gap-bento-gap">
+<div class="mb-4">
+<h1 class="font-h1 text-h1 text-on-background">Requests</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Track the status of your inquiries and service requests.</p>
+</div>
+<!-- Filter/Tabs -->
+<div class="flex gap-2 overflow-x-auto pb-2 mb-2 no-scrollbar">
+<button class="px-4 py-2 rounded-full bg-primary-container text-on-primary-container font-label-caps text-label-caps whitespace-nowrap">ALL REQUESTS</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-caps text-label-caps whitespace-nowrap hover:bg-surface-container-low">PENDING</button>
+<button class="px-4 py-2 rounded-full border border-outline-variant text-on-surface-variant font-label-caps text-label-caps whitespace-nowrap hover:bg-surface-container-low">COMPLETED</button>
+</div>
+<!-- Request List - Bento Boxes -->
+<div class="flex flex-col gap-bento-gap">
+<!-- Item 1: Pending -->
+<div class="bg-surface-container-lowest border border-surface-variant p-container-padding rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_4px_20px_0_rgba(0,0,0,0.02)] hover:shadow-[0_8px_30px_0_rgba(0,0,0,0.04)] transition-shadow">
+<div class="flex items-start gap-4">
+<div class="p-3 bg-surface-container rounded-lg text-secondary">
+<span class="material-symbols-outlined" data-icon="plumbing">plumbing</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">MAINTENANCE • REQ-8492</span>
+<h2 class="font-h2 text-h2 text-on-background text-xl">Dormitory Sink Repair</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Submitted 2 days ago</p>
+</div>
+</div>
+<div class="flex md:flex-col items-center md:items-end justify-between md:justify-center w-full md:w-auto mt-2 md:mt-0">
+<span class="font-status-tag text-status-tag bg-tertiary-container/20 text-on-tertiary-container px-3 py-1 rounded-full">Pending</span>
+<button class="text-primary mt-2 flex items-center font-label-caps text-label-caps gap-1 hover:text-primary-container transition-colors">
+                        VIEW DETAILS <span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Item 2: Received -->
+<div class="bg-surface-container-lowest border border-surface-variant p-container-padding rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_4px_20px_0_rgba(0,0,0,0.02)] hover:shadow-[0_8px_30px_0_rgba(0,0,0,0.04)] transition-shadow">
+<div class="flex items-start gap-4">
+<div class="p-3 bg-surface-container rounded-lg text-secondary">
+<span class="material-symbols-outlined" data-icon="school">school</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">ACADEMIC • REQ-8488</span>
+<h2 class="font-h2 text-h2 text-on-background text-xl">Transcript Request</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Submitted 4 days ago</p>
+</div>
+</div>
+<div class="flex md:flex-col items-center md:items-end justify-between md:justify-center w-full md:w-auto mt-2 md:mt-0">
+<span class="font-status-tag text-status-tag bg-secondary-container/30 text-on-secondary-container px-3 py-1 rounded-full">Received</span>
+<button class="text-primary mt-2 flex items-center font-label-caps text-label-caps gap-1 hover:text-primary-container transition-colors">
+                        VIEW DETAILS <span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Item 3: Completed -->
+<div class="bg-surface-container-lowest border border-surface-variant p-container-padding rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_4px_20px_0_rgba(0,0,0,0.02)] opacity-80 hover:opacity-100 transition-opacity">
+<div class="flex items-start gap-4">
+<div class="p-3 bg-surface-container rounded-lg text-secondary">
+<span class="material-symbols-outlined" data-icon="restaurant">restaurant</span>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-on-surface-variant block mb-1">DINING • REQ-8451</span>
+<h2 class="font-h2 text-h2 text-on-background text-xl">Meal Plan Upgrade</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Completed last week</p>
+</div>
+</div>
+<div class="flex md:flex-col items-center md:items-end justify-between md:justify-center w-full md:w-auto mt-2 md:mt-0">
+<span class="font-status-tag text-status-tag bg-primary-container/20 text-on-primary-container px-3 py-1 rounded-full">Completed</span>
+<button class="text-primary mt-2 flex items-center font-label-caps text-label-caps gap-1 hover:text-primary-container transition-colors">
+                        VIEW DETAILS <span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-end px-4 pb-4 pt-2 bg-white dark:bg-slate-900 font-['Public_Sans'] text-[11px] uppercase tracking-wider font-bold rounded-t-3xl border-t border-slate-100 dark:border-slate-800 shadow-[0_-10px_30px_rgba(0,0,0,0.05)]">
+<a class="flex flex-col items-center justify-center text-slate-700 dark:text-slate-400 min-w-[64px] pb-1" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">grid_view</span>
+<span class="font-black">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-primary-container min-w-[64px] pb-1" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">list_alt</span>
+<span class="font-black">Requests</span>
+</a>
+<a class="flex flex-col items-center justify-center -translate-y-4" href="#">
+<div class="bg-[#00658b] text-white rounded-full w-16 h-16 flex items-center justify-center shadow-lg border-4 border-white dark:border-slate-900">
+<span class="material-symbols-outlined text-4xl">add</span>
+</div>
+<span class="sr-only">Add</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-700 dark:text-slate-400 min-w-[64px] pb-1" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">mail</span>
+<span class="font-black">Inbox</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary bg-primary-container/20 rounded-2xl px-4 py-2 min-w-[64px] mb-1" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl" data-weight="fill">person</span>
+<span class="font-black">Profile</span>
+</a>
+</nav>
+</body></html>
