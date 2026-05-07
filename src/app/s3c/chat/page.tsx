@@ -3,9 +3,9 @@ import { Send, Bot } from "lucide-react";
 
 export default function AIChatPage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col h-screen">
       <TopBar title="NUST AI Assistant" showBack={true} backHref="/s3c" />
-      <main className="flex-grow flex flex-col max-w-4xl mx-auto w-full px-4 md:px-6 py-4 md:py-6 pb-40 md:pb-24">
+      <main className="flex-1 flex flex-col max-w-4xl mx-auto w-full px-4 md:px-6 py-4 md:py-6 pb-24 overflow-hidden">
         
         <div className="flex flex-col gap-6 md:gap-8 overflow-y-auto flex-grow mb-6">
           {/* System Message */}
@@ -36,8 +36,8 @@ export default function AIChatPage() {
           </div>
         </div>
 
-        {/* Input Area */}
-        <div className="fixed md:sticky bottom-32 md:bottom-8 left-0 w-full px-4 md:px-0 z-30">
+        {/* Input Area — sits at bottom of viewport; no nav beneath it */}
+        <div className="fixed bottom-4 left-0 w-full px-4 md:px-0 z-30">
           <div className="max-w-4xl mx-auto">
             <div className="bg-white/80 backdrop-blur-xl border border-[#E6EEF8] rounded-[24px] p-1.5 pr-1.5 pl-5 md:p-2 md:pr-2 md:pl-6 flex items-center shadow-[0_20px_50px_rgba(15,23,42,0.1)] focus-within:border-[#3B82F6] focus-within:ring-4 ring-[#3B82F6]/5 transition-all duration-300">
               <input 

@@ -11,11 +11,11 @@ export default function S3CServicesDashboardPage() {
     <>
       <TopBar title="S3C SERVICES" showBack={false} />
 
-      <main className="max-w-[1280px] mx-auto w-full px-4 md:px-8 py-4 md:py-12 pb-36">
+      <main className="max-w-[1280px] mx-auto w-full px-4 md:px-8 pt-3 md:pt-12 pb-40 md:pb-16">
 
         {/* ── Hero heading ─────────────────────────────────────── */}
-        <div className="mb-4 md:mb-8 max-w-2xl text-center md:text-left">
-          <h1 className="text-xl md:text-[48px] font-bold text-[#0F172A] tracking-tight leading-[1.1] mb-1 md:mb-2">
+        <div className="mb-3 md:mb-8 max-w-2xl text-center md:text-left">
+          <h1 className="text-xl md:text-[48px] font-bold text-[#0F172A] tracking-tight leading-[1.1] mb-0.5 md:mb-2">
             How can we help you today?
           </h1>
           <p className="text-xs md:text-[18px] text-[#64748B] font-medium max-w-lg leading-relaxed mx-auto md:mx-0">
@@ -31,7 +31,7 @@ export default function S3CServicesDashboardPage() {
             className="lg:col-span-7 bg-white border border-[#E6EEF8] rounded-[22px] shadow-[0_8px_24px_rgba(15,23,42,0.04)] p-4 md:p-8 flex flex-col group transition-all duration-[250ms] ease-in-out hover:-translate-y-1.5 hover:bg-[#F8FAFC] hover:border-[#BFDBFE] hover:shadow-[0_15px_35px_rgba(15,23,42,0.08)] relative overflow-hidden"
           >
             <div className="relative z-10 flex-grow">
-              <div className="flex justify-between items-start mb-6 md:mb-8">
+              <div className="flex justify-between items-start mb-3 md:mb-8">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 md:w-11 md:h-11 rounded-full bg-[#EFF6FF] flex items-center justify-center border border-[#DBEAFE] group-hover:bg-[#2563EB] group-hover:border-[#2563EB] transition-colors duration-[250ms]">
                     <Grip className="w-5 h-5 md:w-5 md:h-5 text-[#3B82F6] group-hover:text-white transition-colors duration-[250ms]" />
@@ -49,7 +49,7 @@ export default function S3CServicesDashboardPage() {
               </p>
 
               {/* Category tiles */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mt-2 md:mt-0">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 md:gap-4 mt-1 md:mt-0">
                 {[
                   { icon: GraduationCap, label: "Academics", color: "#3B82F6", bg: "bg-blue-50/50" },
                   { icon: Utensils, label: "Dining", color: "#F59E0B", bg: "bg-amber-50/50" },
@@ -58,7 +58,7 @@ export default function S3CServicesDashboardPage() {
                 ].map((cat) => (
                   <div
                     key={cat.label}
-                    className={`flex flex-col items-center gap-2 md:gap-4 p-4 md:p-5 rounded-xl md:rounded-[20px] border border-gray-100 bg-white transition-all duration-[250ms] hover:border-[#E2E8F0] hover:shadow-md active:scale-[0.96] cursor-pointer`}
+                    className={`flex flex-col items-center gap-1.5 md:gap-4 p-2.5 md:p-5 rounded-xl md:rounded-[20px] border border-gray-100 bg-white transition-all duration-[250ms] hover:border-[#E2E8F0] hover:shadow-md active:scale-[0.96] cursor-pointer`}
                   >
                     <div
                       className={`w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center border transition-all duration-[250ms] ${cat.bg} border-transparent group-hover:scale-105`}

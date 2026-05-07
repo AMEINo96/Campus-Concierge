@@ -7,6 +7,10 @@ import { Home, ClipboardList, Plus, Inbox, User } from "lucide-react";
 export default function S3CBottomNav() {
   const pathname = usePathname();
 
+  // Hide the nav completely on the chat screen — it wastes screen space
+  // and interferes with the keyboard/input area.
+  if (pathname === "/s3c/chat") return null;
+
   const navItems = [
     { name: "Home", href: "/s3c", icon: Home },
     { name: "Requests", href: "/requests", icon: ClipboardList },
