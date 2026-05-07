@@ -14,7 +14,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Campus Concierge",
+  title: "NustX",
   description: "University App Prototype",
 };
 

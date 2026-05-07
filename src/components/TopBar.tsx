@@ -357,7 +357,7 @@ export default function TopBar({ title, showBack = false, backHref = "#" }: TopB
               <div className="p-6 mt-auto">
                 <div className="p-5 rounded-[24px] bg-slate-50 border border-slate-100 relative overflow-hidden group">
                   <div className="absolute top-0 right-0 w-20 h-20 bg-blue-500/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:bg-blue-500/10 transition-colors"></div>
-                  <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1.5">Campus Concierge</p>
+                  <p className="text-[10px] font-black text-blue-600 uppercase tracking-widest mb-1.5">NustX</p>
                   <p className="text-[12px] text-slate-500 font-medium leading-relaxed">
                     Digital assistant for a smarter, unified university experience.
                   </p>

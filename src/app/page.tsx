@@ -26,7 +26,7 @@ export default function LoginPage() {
             <svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-full h-full opacity-90"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
           </div>
           <h1 className="text-3xl md:text-[36px] leading-tight tracking-tight font-extrabold text-white">
-            Campus Concierge
+            NustX
           </h1>
           <p className="text-sm md:text-[16px] text-blue-100 font-medium tracking-wide">
             Your university, simplified.
