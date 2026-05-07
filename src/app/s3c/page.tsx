@@ -11,24 +11,24 @@ export default function S3CServicesDashboardPage() {
     <>
       <TopBar title="S3C SERVICES" showBack={false} />
 
-      <main className="max-w-[1280px] mx-auto w-full px-4 md:px-8 py-8 md:py-12 pb-36">
+      <main className="max-w-[1280px] mx-auto w-full px-4 md:px-8 py-4 md:py-12 pb-36">
 
         {/* ── Hero heading ─────────────────────────────────────── */}
-        <div className="mb-6 md:mb-8 max-w-2xl text-center md:text-left">
-          <h1 className="text-3xl md:text-[48px] font-bold text-[#0F172A] tracking-tight leading-[1.1] mb-2">
+        <div className="mb-4 md:mb-8 max-w-2xl text-center md:text-left">
+          <h1 className="text-xl md:text-[48px] font-bold text-[#0F172A] tracking-tight leading-[1.1] mb-1 md:mb-2">
             How can we help you today?
           </h1>
-          <p className="text-sm md:text-[18px] text-[#64748B] font-medium max-w-lg leading-relaxed mx-auto md:mx-0">
+          <p className="text-xs md:text-[18px] text-[#64748B] font-medium max-w-lg leading-relaxed mx-auto md:mx-0">
             Your unified dashboard for campus life, schedules, and support services.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-3 md:gap-6">
 
           {/* ── Browse Services bento ───────────────────────────── */}
           <Link
             href="/s3c/services"
-            className="lg:col-span-7 bg-white border border-[#E6EEF8] rounded-[22px] shadow-[0_8px_24px_rgba(15,23,42,0.04)] p-6 md:p-8 flex flex-col group transition-all duration-[250ms] ease-in-out hover:-translate-y-1.5 hover:bg-[#F8FAFC] hover:border-[#BFDBFE] hover:shadow-[0_15px_35px_rgba(15,23,42,0.08)] relative overflow-hidden"
+            className="lg:col-span-7 bg-white border border-[#E6EEF8] rounded-[22px] shadow-[0_8px_24px_rgba(15,23,42,0.04)] p-4 md:p-8 flex flex-col group transition-all duration-[250ms] ease-in-out hover:-translate-y-1.5 hover:bg-[#F8FAFC] hover:border-[#BFDBFE] hover:shadow-[0_15px_35px_rgba(15,23,42,0.08)] relative overflow-hidden"
           >
             <div className="relative z-10 flex-grow">
               <div className="flex justify-between items-start mb-6 md:mb-8">
@@ -43,8 +43,8 @@ export default function S3CServicesDashboardPage() {
                 </div>
               </div>
 
-              <h2 className="text-3xl md:text-[34px] font-bold text-[#0F172A] mb-2 md:mb-3 leading-tight tracking-tight">Browse Services</h2>
-              <p className="text-sm md:text-[16px] text-[#64748B] mb-8 md:mb-10 leading-relaxed max-w-md">
+              <h2 className="text-xl md:text-[34px] font-bold text-[#0F172A] mb-1.5 md:mb-3 leading-tight tracking-tight">Browse Services</h2>
+              <p className="text-xs md:text-[16px] text-[#64748B] mb-4 md:mb-10 leading-relaxed max-w-md">
                 Access academic advising, IT support, dining plans, and facility reservations in one centralized location.
               </p>
 
@@ -78,7 +78,7 @@ export default function S3CServicesDashboardPage() {
           {/* ── Chatbot bento ──────────────────────────────────── */}
           <Link
             href="/s3c/chat"
-            className="lg:col-span-5 rounded-[22px] p-6 md:p-9 flex flex-col relative overflow-hidden group cursor-pointer transition-all duration-[250ms] ease-out hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(11,47,107,0.3)] active:scale-[0.98]"
+            className="lg:col-span-5 rounded-[22px] p-4 md:p-9 flex flex-col relative overflow-hidden group cursor-pointer transition-all duration-[250ms] ease-out hover:-translate-y-1.5 hover:shadow-[0_20px_50px_rgba(11,47,107,0.3)] active:scale-[0.98]"
             style={{
               background: "linear-gradient(145deg, #0B2F6B 0%, #0E4092 100%)",
             }}
@@ -89,16 +89,16 @@ export default function S3CServicesDashboardPage() {
             <div className="absolute bottom-24 right-8 text-[#60A5FA] opacity-30 scale-50">✨</div>
 
             <div className="relative z-10 flex flex-col h-full">
-              <div className="flex items-center gap-2.5 mb-6 md:mb-8">
+              <div className="flex items-center gap-2.5 mb-3 md:mb-8">
                 <div className="w-9 h-9 rounded-full bg-[#FACC15] flex items-center justify-center shadow-lg">
                   <Zap size={16} className="text-[#0B2F6B]" />
                 </div>
                 <span className="text-[11px] md:text-[12px] font-bold text-[#FACC15] uppercase tracking-[0.2em]">Instant Guide</span>
               </div>
 
-              <div className="flex items-start gap-4 mb-8 md:mb-10 flex-grow">
+              <div className="flex items-start gap-3 md:gap-4 mb-4 md:mb-10 flex-grow">
                 <div className="flex-1">
-                  <h2 className="text-3xl md:text-[34px] font-bold text-white mb-3 md:mb-4 leading-tight tracking-tight">AI Assistant</h2>
+                  <h2 className="text-2xl md:text-[34px] font-bold text-white mb-2 md:mb-4 leading-tight tracking-tight">AI Assistant</h2>
                   <p className="text-sm md:text-[16px] text-blue-100/90 leading-relaxed">
                     Ask about schedules, campus locations, or university policies for immediate support.
                   </p>

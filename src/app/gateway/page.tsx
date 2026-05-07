@@ -6,17 +6,17 @@ export default function GatewayPage() {
   return (
     <>
       <TopBar />
-      <main className="flex-grow px-4 md:px-12 pt-4 md:pt-2 pb-32 max-w-[1060px] mx-auto w-full">
-        <div className="mb-8 md:mb-10 text-center md:text-left">
-          <h1 className="text-3xl md:text-[42px] leading-[1.1] tracking-tight font-extrabold text-[#0B1426] dark:text-white mb-2">
+      <main className="flex-grow px-4 md:px-12 pt-3 md:pt-2 pb-32 max-w-[1060px] mx-auto w-full">
+        <div className="mb-4 md:mb-10 text-center md:text-left">
+          <h1 className="text-xl md:text-[42px] leading-[1.1] tracking-tight font-extrabold text-[#0B1426] dark:text-white mb-1 md:mb-2">
             Welcome back, Amina
           </h1>
-          <p className="text-base md:text-[17px] font-medium text-[#64748B] dark:text-slate-400">
+          <p className="text-sm md:text-[17px] font-medium text-[#64748B] dark:text-slate-400">
             Where would you like to go today?
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-10">
           <Link
             href="/portal"
             className="group block relative overflow-hidden rounded-[28px] p-5 md:p-8 bg-white/70 dark:bg-slate-800/70 backdrop-blur-xl border border-white/60 dark:border-slate-700/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] transition-all duration-[250ms] ease-out hover:-translate-y-2 hover:bg-[#F5F9FF]/90 hover:border-[#BFDBFE] hover:shadow-[0_20px_40px_rgba(37,99,235,0.1)] active:scale-[0.98] cursor-pointer"
@@ -31,8 +31,8 @@ export default function GatewayPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-white/20 to-transparent dark:from-slate-800 dark:via-slate-800/80 group-hover:from-[#F5F9FF]/40 transition-colors duration-300" />
             </div>
 
-            <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px] md:min-h-[180px]">
-              <div className="flex justify-between items-start mb-6">
+            <div className="relative z-10 flex flex-col h-full justify-between min-h-[120px] md:min-h-[180px]">
+              <div className="flex justify-between items-start mb-3 md:mb-6">
                 <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#EEF4FF] dark:bg-slate-700/80 flex items-center justify-center border border-[#E0E7FF] dark:border-slate-600 group-hover:bg-[#2563EB] group-hover:border-[#2563EB] group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-[250ms]">
                   <GraduationCap
                     strokeWidth={1.5}
@@ -71,7 +71,7 @@ export default function GatewayPage() {
               <div className="absolute inset-0 bg-gradient-to-r from-white/40 via-white/20 to-transparent dark:from-slate-800 dark:via-slate-800/80 group-hover:from-[#F0FDF4]/40 transition-colors duration-300" />
             </div>
 
-            <div className="relative z-10 flex flex-col h-full justify-between min-h-[160px] md:min-h-[180px]">
+            <div className="relative z-10 flex flex-col h-full justify-between min-h-[120px] md:min-h-[180px]">
               <div className="flex justify-between items-start mb-6">
                 <div className="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#F0FDF4] dark:bg-slate-700/80 flex items-center justify-center border border-[#DCFCE7] dark:border-slate-600 group-hover:bg-[#10B981] group-hover:border-[#10B981] group-hover:shadow-lg group-hover:shadow-emerald-500/20 transition-all duration-[250ms]">
                   <Compass
