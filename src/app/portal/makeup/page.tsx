@@ -12,106 +12,10 @@ export default function MakeupClassesPage() {
         </section>
 
         <div className="flex flex-col gap-4">
-          {/* Make-Up Class Card 1 */}
-          <div className="bento-card flex flex-col gap-4 bg-white">
-            <div className="flex justify-between items-start border-b border-[#E2E2E2] pb-4">
-              <div>
-                <span className="font-[family-name:var(--font-space-grotesk)] text-[12px] font-semibold text-[#15A8E3] uppercase tracking-widest block mb-1">
-                  CS-201
-                </span>
-                <h3 className="text-xl font-bold text-[#171717] flex items-center gap-2">
-                  <BookOpen size={20} className="text-[#474747]" />
-                  Data Structures
-                </h3>
-              </div>
-              <span className="bg-[#15A8E3]/10 text-[#15A8E3] font-[family-name:var(--font-space-grotesk)] text-[12px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">
-                Upcoming
-              </span>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#f9f9f8] flex items-center justify-center text-[#474747]">
-                  <Calendar size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-[#474747] font-semibold">Date</p>
-                  <p className="text-[#171717]">Friday, Nov 15</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#f9f9f8] flex items-center justify-center text-[#474747]">
-                  <Clock size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-[#474747] font-semibold">Time</p>
-                  <p className="text-[#171717]">2:00 PM - 3:30 PM</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#f9f9f8] flex items-center justify-center text-[#474747]">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-[#474747] font-semibold">Venue</p>
-                  <p className="text-[#171717]">CR-04, Block B</p>
-                </div>
-              </div>
-            </div>
+          <div className="bento-card flex flex-col items-center justify-center py-16 bg-white dark:bg-slate-800 text-center border border-slate-200 dark:border-slate-700">
+            <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">Coming Soon</h3>
+            <p className="text-slate-500 dark:text-slate-400">Make-up classes will be displayed here for now.</p>
           </div>
-
-          {/* Make-Up Class Card 2 */}
-          <div className="bento-card flex flex-col gap-4 bg-white">
-            <div className="flex justify-between items-start border-b border-[#E2E2E2] pb-4">
-              <div>
-                <span className="font-[family-name:var(--font-space-grotesk)] text-[12px] font-semibold text-[#15A8E3] uppercase tracking-widest block mb-1">
-                  AI-301
-                </span>
-                <h3 className="text-xl font-bold text-[#171717] flex items-center gap-2">
-                  <BookOpen size={20} className="text-[#474747]" />
-                  Artificial Intelligence
-                </h3>
-              </div>
-              <span className="bg-[#15A8E3]/10 text-[#15A8E3] font-[family-name:var(--font-space-grotesk)] text-[12px] px-3 py-1 rounded-full font-bold uppercase tracking-widest">
-                Upcoming
-              </span>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#f9f9f8] flex items-center justify-center text-[#474747]">
-                  <Calendar size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-[#474747] font-semibold">Date</p>
-                  <p className="text-[#171717]">Monday, Nov 18</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#f9f9f8] flex items-center justify-center text-[#474747]">
-                  <Clock size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-[#474747] font-semibold">Time</p>
-                  <p className="text-[#171717]">10:00 AM - 11:30 AM</p>
-                </div>
-              </div>
-              
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-[#f9f9f8] flex items-center justify-center text-[#474747]">
-                  <MapPin size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-[#474747] font-semibold">Venue</p>
-                  <p className="text-[#171717]">Auditorium</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </main>
     </>

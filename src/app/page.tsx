@@ -1,7 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { BadgeCheck, Lock, EyeOff } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useCredentials } from "@/lib/useBackend";
 
 export default function LoginPage() {
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const { creds, saveCreds } = useCredentials();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (creds.user && creds.password) {
+      router.push("/portal");
+    }
+  }, [creds.user, creds.password, router]);
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    saveCreds(user, password);
+    router.push("/portal");
+  };
+
   return (
     <main className="w-full flex-grow flex items-center justify-center p-6">
       <div className="w-full max-w-md flex flex-col items-center gap-12 z-10">
@@ -13,7 +35,7 @@ export default function LoginPage() {
         </header>
 
         <section className="w-full bento-card flex flex-col gap-4">
-          <form className="flex flex-col gap-4" action="/gateway" method="GET">
+          <form className="flex flex-col gap-4" onSubmit={handleLogin}>
             <div className="flex flex-col gap-1">
               <label
                 className="font-[family-name:var(--font-space-grotesk)] text-xs tracking-wider font-semibold uppercase text-slate-900 dark:text-white"
@@ -33,6 +55,9 @@ export default function LoginPage() {
                   name="qalam-id"
                   placeholder="e.g., 345678"
                   type="text"
+                  value={user}
+                  onChange={(e) => setUser(e.target.value)}
+                  required
                 />
               </div>
             </div>
@@ -56,6 +81,9 @@ export default function LoginPage() {
                   name="password"
                   placeholder="••••••••"
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
                 <button
                   aria-label="Toggle password visibility"
@@ -76,12 +104,12 @@ export default function LoginPage() {
               </Link>
             </div>
 
-            <Link
-              href="/gateway"
+            <button
+              type="submit"
               className="w-full mt-2 py-3 px-6 rounded-lg font-semibold text-[18px] tracking-wide transition-colors shadow-sm dark:shadow-none focus:outline-none focus:ring-2 focus:ring-offset-2 bg-[#15A8E3] hover:opacity-90 text-white text-center inline-block"
             >
               Sign In
-            </Link>
+            </button>
           </form>
         </section>
       </div>

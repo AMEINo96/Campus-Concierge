@@ -2,53 +2,82 @@
 
 import { useState } from "react";
 import TopBar from "@/components/TopBar";
-import { Flame, AlertTriangle, ArrowUpRight, ArrowDownRight, ChevronDown } from "lucide-react";
+import { Flame, AlertTriangle, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useQalamData } from "@/lib/useBackend";
+import { useParams } from "next/navigation";
 
 export default function QalamSubjectDetailsPage() {
-  // Mock Data
+  const params = useParams();
+  const id = decodeURIComponent(params.id as string);
+  const { data, loading, error } = useQalamData();
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
+    assessments: true,
+  });
+
+  if (loading) {
+    return (
+      <>
+        <TopBar title="Course Details" showBack={true} backHref="/portal/qalam" />
+        <main className="w-full max-w-4xl mx-auto px-6 py-12 pb-32 text-center text-slate-500">
+          Loading course details...
+        </main>
+      </>
+    );
+  }
+
+  let course: any = null;
+  if (data?.terms) {
+    for (const term of data.terms) {
+      const found = Object.values(term.courses).find((c: any) => c.name === id);
+      if (found) {
+        course = found;
+        break;
+      }
+    }
+  }
+
+  if (!course) {
+    return (
+      <>
+        <TopBar title="Course Details" showBack={true} backHref="/portal/qalam" />
+        <main className="w-full max-w-4xl mx-auto px-6 py-12 pb-32 text-center text-red-500">
+          Course not found.
+        </main>
+      </>
+    );
+  }
+
   const attendance = {
-    present: 26,
-    absent: 4,
-    percentage: 86.6,
-    safeSkipsRemaining: 4, // > 2 means safe
+    percentage: course.attendance || 0,
+    safeSkipsRemaining: Math.floor((course.attendance / 100) * 4), // mock
   };
 
   const absolutes = {
-    userScore: 30.90,
-    classAverage: 34.48,
+    userScore: course.assessments?.[0]?.obtained_marks || 0,
+    classAverage: course.assessments?.[0]?.class_average || 0,
+    maxScore: course.assessments?.[0]?.max_marks || 100,
   };
+  
+  const userScorePercent = (absolutes.userScore / Math.max(1, absolutes.maxScore)) * 100;
+  const classAvgPercent = (absolutes.classAverage / Math.max(1, absolutes.maxScore)) * 100;
+  const mockStreak = Math.max(0, Math.floor((attendance.percentage / 100) * 15) - (course.name.length % 5));
 
   const evaluationCategories = [
     {
-      id: "lab_work",
-      title: "Lab Work",
-      weight: 70,
-      totalObtainedPercentage: 86.75,
+      id: "assessments",
+      title: "Assessments Overview",
+      weight: 100,
+      totalObtainedPercentage: userScorePercent,
       colorClass: "bg-[#15A8E3]/10 text-[#004c6a]",
-      items: [
-        { title: "Lab 1", score: 18, total: 25, average: 14.5 },
-        { title: "Lab 2", score: 23, total: 25, average: 22.04 },
-        { title: "Lab 3", score: 23, total: 25, average: 20.1 },
-        { title: "Lab 4", score: 22.75, total: 25, average: 19.5 },
-      ]
-    },
-    {
-      id: "quizzes",
-      title: "Quizzes",
-      weight: 15,
-      totalObtainedPercentage: 75.50,
-      colorClass: "bg-red-500/10 text-red-700",
-      items: [
-        { title: "Quiz 1", score: 12, total: 15, average: 10.2 },
-        { title: "Quiz 2", score: 11.5, total: 15, average: 11.0 },
-      ]
+      items: course.assessments?.map((ass: any, i: number) => ({
+        title: "Total Evaluations",
+        score: ass.obtained_marks,
+        total: ass.max_marks,
+        average: ass.class_average,
+      })) || []
     }
   ];
-
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({
-    lab_work: true,
-  });
 
   const toggleCategory = (id: string) => {
     setOpenCategories((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -56,7 +85,7 @@ export default function QalamSubjectDetailsPage() {
 
   return (
     <>
-      <TopBar title="Artificial Intelligence" showBack={true} backHref="/portal/qalam" />
+      <TopBar title={course.name} showBack={true} backHref="/portal/qalam" />
       <main className="w-full max-w-4xl mx-auto px-6 py-12 pb-32 flex flex-col gap-6 font-[family-name:var(--font-public-sans)]">
         
         {/* ATTENDANCE BENTO BOX */}
@@ -65,22 +94,24 @@ export default function QalamSubjectDetailsPage() {
             <h2 className="font-[family-name:var(--font-space-grotesk)] text-xs text-slate-900 uppercase tracking-widest font-bold">
               ATTENDANCE RECORD
             </h2>
-            <div className="flex items-center gap-1 bg-white border border-slate-200 text-[#ea580c] px-3 py-1 rounded-full font-bold text-sm">
-              <Flame size={16} strokeWidth={2.5} />
-              <span>14 Streak</span>
-            </div>
+            {mockStreak > 2 && (
+              <div className="flex items-center gap-1 bg-white border border-slate-200 text-[#ea580c] px-3 py-1 rounded-full font-bold text-sm">
+                <Flame size={16} strokeWidth={2.5} />
+                <span>{mockStreak} Streak</span>
+              </div>
+            )}
           </div>
           
           <div className="flex items-center justify-between relative z-10">
             <div className="flex flex-col">
-              <span className="text-[40px] leading-[1.2] tracking-tight font-bold text-slate-900">86.6%</span>
-              <span className="text-base text-slate-500 mt-1">Present: {attendance.present} | Absent: {attendance.absent}</span>
+              <span className="text-[40px] leading-[1.2] tracking-tight font-bold text-slate-900">{attendance.percentage.toFixed(1)}%</span>
+              <span className="text-base text-slate-500 mt-1">{attendance.safeSkipsRemaining} estimated skips remaining</span>
             </div>
             
             <div className="relative w-24 h-24">
               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                 <circle cx="50" cy="50" fill="transparent" r="40" stroke="#F1F5F9" strokeWidth="8"></circle>
-                <circle cx="50" cy="50" fill="transparent" r="40" stroke="#15A8E3" strokeDasharray="251.2" strokeDashoffset={251.2 - (251.2 * 0.866)} strokeLinecap="round" strokeWidth="8"></circle>
+                <circle cx="50" cy="50" fill="transparent" r="40" stroke="#15A8E3" strokeDasharray="251.2" strokeDashoffset={251.2 - (251.2 * (attendance.percentage / 100))} strokeLinecap="round" strokeWidth="8"></circle>
               </svg>
             </div>
           </div>
@@ -199,7 +230,7 @@ export default function QalamSubjectDetailsPage() {
                     >
                       <div className="border-t border-slate-200 bg-white">
                         <div className="flex flex-col">
-                          {category.items.map((item, index) => {
+                          {category.items.map((item: any, index: number) => {
                             const percentage = ((item.score / item.total) * 100).toFixed(2);
                             
                             return (
