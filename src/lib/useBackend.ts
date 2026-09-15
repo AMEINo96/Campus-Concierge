@@ -31,7 +31,7 @@ export function useCredentials() {
   return { creds, saveCreds, clearCreds };
 }
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 
 export function useQalamData() {
   const { creds } = useCredentials();
