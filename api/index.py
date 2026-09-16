@@ -214,26 +214,48 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                 "final_grade": "In Progress"
             }
         
-        # Now fetch marks for these from results page gradebook links
+        # Now fetch marks and attendance details concurrently
         try:
-            results_res = session.get(f"{QALAM_BASE}/student/results", timeout=30)
-            res_soup = BeautifulSoup(results_res.text, "html.parser")
+            import concurrent.futures
+            
+            def fetch_res_att():
+                try:
+                    r1 = session.get(f"{QALAM_BASE}/student/results", timeout=30)
+                    r2 = session.get(f"{QALAM_BASE}/student/attendance", timeout=30)
+                    return r1.text, r2.text
+                except:
+                    return "", ""
+
+            res_text, att_text = fetch_res_att()
+            
+            res_soup = BeautifulSoup(res_text, "html.parser")
             gradebook_links = []
             for a in res_soup.find_all("a", href=True):
                 if "/student/course/gradebook/" in a["href"]:
                     n_span = a.find("span", class_="md-list-heading")
                     if n_span:
                         gradebook_links.append({"name": n_span.get_text(strip=True), "url": a["href"]})
-            
-            import concurrent.futures
-            
-            def fetch_gb(gl):
-                ckey = _slugify(gl["name"]) or gl["name"]
-                if ckey in active_courses:
+                        
+            att_soup = BeautifulSoup(att_text, "html.parser")
+            att_links = []
+            for a in att_soup.find_all("a", href=True):
+                if "/student/course/attendance/" in a["href"]:
+                    n_span = a.find("span", class_="md-list-heading")
+                    if n_span:
+                        att_links.append({"name": n_span.get_text(strip=True), "url": a["href"]})
+                        
+            def fetch_gb_and_att(course_name, gb_url, att_url):
+                ckey = _slugify(course_name) or course_name
+                if ckey not in active_courses: return None
+                
+                assessments = []
+                total_classes = 0
+                attended = 0
+                
+                if gb_url:
                     try:
-                        gb_res = session.get(f"{QALAM_BASE}{gl['url']}", timeout=30)
+                        gb_res = session.get(f"{QALAM_BASE}{gb_url}", timeout=30)
                         gb_soup = BeautifulSoup(gb_res.text, "html.parser")
-                        assessments = []
                         for table in gb_soup.find_all("table"):
                             headers = []
                             for tr in table.find_all("tr"):
@@ -252,19 +274,44 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                                         })
                                     except Exception:
                                         pass
-                        if assessments:
-                            return ckey, assessments
-                    except Exception as e:
-                        print("Error fetching gradebook:", e)
-                return None, None
+                    except Exception: pass
+                    
+                if att_url:
+                    try:
+                        att_res = session.get(f"{QALAM_BASE}{att_url}", timeout=30)
+                        att_soup = BeautifulSoup(att_res.text, "html.parser")
+                        for table in att_soup.find_all("table"):
+                            for tr in table.find_all("tr"):
+                                cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
+                                if len(cells) >= 3 and cells[0] != "Sr. no":
+                                    total_classes += 1
+                                    if "Present" in cells[2] or "Late" in cells[2]:
+                                        attended += 1
+                    except Exception: pass
+                    
+                return ckey, assessments, total_classes, attended
+
+            # Combine links by course
+            courses_map = {}
+            for g in gradebook_links: courses_map[g["name"]] = {"gb": g["url"], "att": None}
+            for a in att_links:
+                if a["name"] not in courses_map: courses_map[a["name"]] = {"gb": None, "att": a["url"]}
+                else: courses_map[a["name"]]["att"] = a["url"]
+                
+            tasks = []
+            for c_name, urls in courses_map.items():
+                tasks.append((c_name, urls["gb"], urls["att"]))
                 
             with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
-                results = executor.map(fetch_gb, gradebook_links)
-                for ckey, assessments in results:
-                    if ckey:
-                        active_courses[ckey]["assessments"] = assessments
+                results = executor.map(lambda p: fetch_gb_and_att(*p), tasks)
+                for res in results:
+                    if res:
+                        ckey, assessments, total_classes, attended = res
+                        if assessments: active_courses[ckey]["assessments"] = assessments
+                        active_courses[ckey]["total_classes"] = total_classes
+                        active_courses[ckey]["attended_classes"] = attended
         except Exception as e:
-            print("Failed fetching active marks:", e)
+            print("Failed fetching active marks/att:", e)
             
         if active_courses:
             # Check if this term already exists in all_terms_data

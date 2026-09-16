@@ -63,8 +63,7 @@ export default function QalamPage() {
         {!loading && !error && coursesToDisplay.length > 0 && (
           <div className="flex flex-col gap-4">
             {coursesToDisplay.map((course: any, idx: number) => {
-              const mockStreak = Math.max(0, Math.floor((course.attendance / 100) * 15) - (course.name.length % 5));
-              return (
+                            return (
                 <Link key={idx} href={`/portal/qalam/${encodeURIComponent(course.name)}`} className={`group block border ${course.danger_alert ? 'border-red-500 dark:border-red-600' : 'border-slate-200 dark:border-slate-600'} rounded-[16px] bg-white dark:bg-slate-800 overflow-hidden transition-all shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer`}>
                   <div className="w-full p-6 text-left">
                     <div className="flex items-center justify-between">
@@ -75,15 +74,15 @@ export default function QalamPage() {
                         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{course.name}</h3>
                       </div>
                       <div className="flex items-center gap-3">
-                        {mockStreak > 2 && (
-                          <div className="flex items-center gap-1 text-[#ea580c] dark:text-orange-400 font-bold text-sm bg-[#ffedd5] dark:bg-orange-900/30 px-3 py-1.5 rounded-full shadow-sm">
-                            <Flame size={16} strokeWidth={2.5} />
-                            <span>{mockStreak} Streak</span>
-                          </div>
-                        )}
+
                         <div className={`flex items-center gap-1 ${course.danger_alert ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-slate-100 text-slate-700 dark:bg-slate-700 dark:text-slate-300'} px-3 py-1.5 rounded-full font-bold text-sm shadow-sm dark:shadow-none`}>
                           <span>{Math.round(course.attendance)}% Att.</span>
                         </div>
+                        {course.total_classes > 0 && (
+                          <div className={`flex items-center gap-1 ${course.danger_alert ? 'bg-red-100 text-red-600 dark:bg-red-900/30 dark:text-red-400' : 'bg-[#e0f2fe] text-[#0369a1] dark:bg-sky-900/40 dark:text-sky-300'} px-3 py-1.5 rounded-full font-bold text-sm shadow-sm dark:shadow-none`}>
+                            <span>{course.attended_classes} / {course.total_classes}</span>
+                          </div>
+                        )}
                         <ChevronRight className="text-slate-900 dark:text-white group-hover:translate-x-1 transition-transform" />
                       </div>
                     </div>

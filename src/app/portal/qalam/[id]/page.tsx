@@ -61,8 +61,7 @@ export default function QalamSubjectDetailsPage() {
   
   const userScorePercent = (absolutes.userScore / Math.max(1, absolutes.maxScore)) * 100;
   const classAvgPercent = (absolutes.classAverage / Math.max(1, absolutes.maxScore)) * 100;
-  const mockStreak = Math.max(0, Math.floor((attendance.percentage / 100) * 15) - (course.name.length % 5));
-
+  
   const evaluationCategories = [
     {
       id: "assessments",
