@@ -1,5 +1,3 @@
-import PortalBottomNav from "@/components/PortalBottomNav";
-
 export default function PortalLayout({
   children,
 }: {
@@ -8,7 +6,6 @@ export default function PortalLayout({
   return (
     <>
       {children}
-      <PortalBottomNav />
     </>
   );
 }

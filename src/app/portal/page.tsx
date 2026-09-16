@@ -27,7 +27,9 @@ export default function PortalDashboardPage() {
     completion = Math.round((earned / total) * 100) + "%";
   }
 
-  if (lmsData?.summary?.user_name) {
+  if (qalamData?.user_name && qalamData.user_name !== "NUST Student") {
+    degreeName = qalamData.user_name;
+  } else if (lmsData?.summary?.user_name && lmsData.summary.user_name !== "NUST Student") {
     degreeName = lmsData.summary.user_name;
   }
 
