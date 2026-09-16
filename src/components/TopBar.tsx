@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useCredentials } from "@/lib/useBackend";
+import { LogOut } from "lucide-react";
 import { ArrowLeft, Menu, X, LayoutDashboard, Home, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -15,6 +17,13 @@ interface TopBarProps {
 export default function TopBar({ title, showBack = false, backHref = "#" }: TopBarProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { clearCreds } = useCredentials();
+  const router = useRouter();
+  
+  const handleLogout = () => {
+    clearCreds();
+    router.push("/");
+  };
   
 
   const isPortal = pathname?.startsWith("/portal");
@@ -118,6 +127,14 @@ export default function TopBar({ title, showBack = false, backHref = "#" }: TopB
                   <LayoutDashboard size={24} />
                   Student Portal
                 </Link>
+                <span className="text-xs text-[#64748B] dark:text-slate-400 font-bold uppercase tracking-widest mb-2 mt-4 px-2">Account</span>
+                <button 
+                  onClick={handleLogout}
+                  className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 transition-colors font-semibold w-full text-left"
+                >
+                  <LogOut size={24} />
+                  Log Out
+                </button>
               </div>
             </motion.div>
           </>

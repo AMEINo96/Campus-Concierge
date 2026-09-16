@@ -93,10 +93,9 @@ export default function QalamSubjectDetailsPage() {
             <h2 className="font-[family-name:var(--font-space-grotesk)] text-xs text-slate-900 uppercase tracking-widest font-bold">
               ATTENDANCE RECORD
             </h2>
-            {mockStreak > 2 && (
-              <div className="flex items-center gap-1 bg-white border border-slate-200 text-[#ea580c] px-3 py-1 rounded-full font-bold text-sm">
-                <Flame size={16} strokeWidth={2.5} />
-                <span>{mockStreak} Streak</span>
+            {course.total_classes > 0 && (
+              <div className="flex items-center gap-1 bg-white border border-slate-200 text-[#0369a1] px-3 py-1 rounded-full font-bold text-sm">
+                <span>{course.attended_classes} / {course.total_classes} Classes</span>
               </div>
             )}
           </div>
