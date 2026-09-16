@@ -39,15 +39,8 @@ export default function PortalDashboardPage() {
   return (
     <>
       <TopBar title="STUDENT PORTAL" showBack={false} />
-      <main className="max-w-7xl mx-auto px-4 md:px-12 py-12 pb-32">
-        <div className="mb-12 text-center md:text-left">
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
-            Student Portal
-          </h1>
-          <p className="text-lg text-slate-600 dark:text-slate-300">
-            Welcome back. Here&apos;s your academic overview.
-          </p>
-        </div>
+      <main className="max-w-7xl mx-auto px-4 md:px-12 py-4 pb-12">
+        
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Academic Snapshot */}
@@ -66,12 +59,12 @@ export default function PortalDashboardPage() {
             ></div>
 
             <div className="relative z-10">
-              <h2 className="text-xs font-bold text-[#93C5FD] uppercase mb-6 tracking-widest">
+              <h2 className="text-xs font-bold text-[#93C5FD] uppercase mb-3 tracking-widest">
                 Academic Snapshot
               </h2>
-              <div className="flex justify-between items-start mb-6">
+              <div className="flex justify-between items-start mb-3">
                 <div>
-                  <p className="text-xl font-bold text-white leading-[1.3]">
+                  <p className="text-lg font-bold text-white leading-[1.3]">
                     {degreeName}
                   </p>
                   <p className="text-base text-[#BFDBFE] mt-1">
@@ -86,19 +79,19 @@ export default function PortalDashboardPage() {
               </div>
             </div>
 
-            <div className="flex items-center gap-6 mt-4 relative z-10">
-              <div className="flex-1 bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20 shadow-sm dark:shadow-none">
+            <div className="flex items-center gap-3 mt-3 relative z-10">
+              <div className="flex-1 bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20 shadow-sm dark:shadow-none">
                 <p className="text-[12px] font-semibold text-[#93C5FD] uppercase tracking-widest mb-1">
                   CGPA
                 </p>
-                <p className="text-xl font-bold text-white">{qalamLoading ? "..." : cgpa}</p>
+                <p className="text-lg font-bold text-white">{qalamLoading ? "..." : cgpa}</p>
               </div>
-              <div className="flex-1 bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20 flex items-center justify-between shadow-sm dark:shadow-none">
+              <div className="flex-1 bg-white/10 backdrop-blur-md p-3 rounded-lg border border-white/20 flex items-center justify-between shadow-sm dark:shadow-none">
                 <div>
                   <p className="text-[12px] font-semibold text-[#93C5FD] uppercase tracking-widest mb-1">
                     Completion
                   </p>
-                  <p className="text-xl font-bold text-white">{qalamLoading ? "..." : completion}</p>
+                  <p className="text-lg font-bold text-white">{qalamLoading ? "..." : completion}</p>
                 </div>
                 <div className="relative w-12 h-12 flex-shrink-0">
                   <svg className="w-full h-full transform -rotate-90 drop-shadow-md dark:drop-shadow-none" viewBox="0 0 36 36">
@@ -126,28 +119,28 @@ export default function PortalDashboardPage() {
 
           {/* Quick Access Grid */}
           <div className="lg:col-span-7 bento-card-light">
-            <h2 className="text-xs font-bold text-[#3B82F6] uppercase mb-6 tracking-widest">
+            <h2 className="text-xs font-bold text-[#3B82F6] uppercase mb-3 tracking-widest">
               Quick Access
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Link href="/portal/lms" className="flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-blue-100 hover:border-blue-500 hover:shadow-md hover:shadow-blue-100/50 dark:hover:bg-blue-900/40 dark:hover:border-blue-500 group">
-                <BookOpen size={24} strokeWidth={2} className="mb-3 text-[#1E3A8A] dark:text-[#93C5FD] group-hover:text-blue-600 group-hover:scale-110 transition-all" />
-                <span className="text-base font-semibold text-center text-slate-900 dark:text-white">My Courses (LMS)</span>
+            <div className="grid grid-cols-2 gap-3">
+              <Link href="/portal/lms" className="flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-blue-100 hover:border-blue-500 hover:shadow-md hover:shadow-blue-100/50 dark:hover:bg-blue-900/40 dark:hover:border-blue-500 group">
+                <BookOpen size={24} strokeWidth={2} className="mb-2 text-[#1E3A8A] dark:text-[#93C5FD] group-hover:text-blue-600 group-hover:scale-110 transition-all" />
+                <span className="text-sm font-semibold text-center text-slate-900 dark:text-white">LMS</span>
               </Link>
-              <Link href="/portal/makeup" className="flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-purple-100 hover:border-purple-500 hover:shadow-md hover:shadow-purple-100/50 dark:hover:bg-purple-900/40 dark:hover:border-purple-500 group">
-                <CalendarClock size={24} strokeWidth={2} className="mb-3 text-[#6D28D9] dark:text-[#A78BFA] group-hover:text-purple-600 group-hover:scale-110 transition-all" />
-                <span className="text-base font-semibold text-center text-slate-900 dark:text-white">Make-up classes</span>
+              <Link href="/portal/qalam" className="flex flex-col items-center justify-center p-4 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-emerald-100 hover:border-emerald-500 hover:shadow-md hover:shadow-emerald-100/50 dark:hover:bg-emerald-900/40 dark:hover:border-emerald-500 group">
+                <GraduationCap size={24} strokeWidth={2} className="mb-2 text-[#047857] dark:text-[#34D399] group-hover:text-emerald-600 group-hover:scale-110 transition-all" />
+                <span className="text-sm font-semibold text-center text-slate-900 dark:text-white">Qalam</span>
               </Link>
-              <Link href="/portal/qalam" className="flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-emerald-100 hover:border-emerald-500 hover:shadow-md hover:shadow-emerald-100/50 dark:hover:bg-emerald-900/40 dark:hover:border-emerald-500 group">
-                <GraduationCap size={24} strokeWidth={2} className="mb-3 text-[#047857] dark:text-[#34D399] group-hover:text-emerald-600 group-hover:scale-110 transition-all" />
-                <span className="text-base font-semibold text-center text-slate-900 dark:text-white">Qalam</span>
+              <Link href="/portal/makeup" className="col-span-2 flex items-center justify-center gap-3 p-4 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-purple-100 hover:border-purple-500 hover:shadow-md hover:shadow-purple-100/50 dark:hover:bg-purple-900/40 dark:hover:border-purple-500 group">
+                <CalendarClock size={20} strokeWidth={2} className="text-[#6D28D9] dark:text-[#A78BFA] group-hover:text-purple-600 group-hover:scale-110 transition-all" />
+                <span className="text-sm font-semibold text-center text-slate-900 dark:text-white">Make-up classes</span>
               </Link>
             </div>
           </div>
 
           {/* LMS Deadlines */}
           <div className="lg:col-span-12 bento-card-light">
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-3">
               <h2 className="text-xs font-bold text-[#3B82F6] uppercase tracking-widest">
                 LMS Deadlines
               </h2>
