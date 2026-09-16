@@ -55,7 +55,7 @@ export function useQalamData() {
 
     let isMounted = true;
 
-    fetch(`${API_BASE}/sync_qalam?user=${encodeURIComponent(creds.user)}&password=${encodeURIComponent(creds.password)}`)
+    fetch(`${API_BASE}/sync_qalam?user=${encodeURIComponent(creds.user)}&password=${encodeURIComponent(creds.password)}`, { cache: 'no-store' })
       .then(res => res.json())
       .then(d => {
         if (!isMounted) return;
@@ -101,7 +101,7 @@ export function useLmsData() {
 
     let isMounted = true;
 
-    fetch(`${API_BASE}/sync_lms?user=${encodeURIComponent(creds.user)}&password=${encodeURIComponent(creds.password)}`)
+    fetch(`${API_BASE}/sync_lms?user=${encodeURIComponent(creds.user)}&password=${encodeURIComponent(creds.password)}`, { cache: 'no-store' })
       .then(res => res.json())
       .then(d => {
         if (!isMounted) return;

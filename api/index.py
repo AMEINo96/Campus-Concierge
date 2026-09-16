@@ -189,22 +189,17 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                     card = card.parent
                 else:
                     break
-                
             if not card: continue
-            
             strings = list(card.stripped_strings)
             if not strings: continue
-            
             course_name = strings[0]
             full_text = " ".join(strings)
             
             att_match = re.search(r"Attendance[:\s]*([\d\.]+)", full_text, re.I) or re.search(r"Active Class\s*([\d\.]+)", full_text, re.I)
             attendance_val = float(att_match.group(1)) if att_match else 0.0
-            
             term_match = re.search(r"(Fall|Spring|Summer)\s*\d{4}", full_text, re.I)
-            if term_match:
-                active_term = term_match.group(0).strip()
-                
+            if term_match: active_term = term_match.group(0).strip()
+            
             key = _slugify(course_name) or course_name
             active_courses[key] = {
                 "name": course_name,
@@ -218,6 +213,46 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                 "grade_points": 0.0,
                 "final_grade": "In Progress"
             }
+        
+        # Now fetch marks for these from results page gradebook links
+        try:
+            results_res = session.get(f"{QALAM_BASE}/student/results", timeout=30)
+            res_soup = BeautifulSoup(results_res.text, "html.parser")
+            gradebook_links = []
+            for a in res_soup.find_all("a", href=True):
+                if "/student/course/gradebook/" in a["href"]:
+                    n_span = a.find("span", class_="md-list-heading")
+                    if n_span:
+                        gradebook_links.append({"name": n_span.get_text(strip=True), "url": a["href"]})
+            
+            for gl in gradebook_links:
+                ckey = _slugify(gl["name"]) or gl["name"]
+                if ckey in active_courses:
+                    gb_res = session.get(f"{QALAM_BASE}{gl['url']}", timeout=30)
+                    gb_soup = BeautifulSoup(gb_res.text, "html.parser")
+                    assessments = []
+                    for table in gb_soup.find_all("table"):
+                        headers = []
+                        for tr in table.find_all("tr"):
+                            cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
+                            if not cells: continue
+                            if cells[0] == "Assessment" and len(cells) >= 5:
+                                headers = cells
+                                continue
+                            if headers and len(cells) >= 5 and cells[0] != "Assessment":
+                                try:
+                                    assessments.append({
+                                        "name": cells[0],
+                                        "max_marks": float(cells[1] or 0),
+                                        "obtained_marks": float(cells[2] or 0),
+                                        "class_average": float(cells[3] or 0)
+                                    })
+                                except Exception:
+                                    pass
+                    if assessments:
+                        active_courses[ckey]["assessments"] = assessments
+        except Exception as e:
+            print("Failed fetching active marks:", e)
             
         if active_courses:
             # Check if this term already exists in all_terms_data
@@ -558,9 +593,9 @@ def _scrape_lms_course(session: Any, course: Dict[str, Any], course_url: str) ->
             for tr in ai_soup.find_all("tr"):
                 cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
                 if len(cells) >= 3:
-                    due_val = cells[1]
-                    sub_val = cells[-1].lower()
-                    is_sub = "submitted" in sub_val
+                    due_val = cells[1] if len(cells) > 2 else "N/A"
+                    row_text = " ".join(cells).lower()
+                    is_sub = "submitted" in row_text or "graded" in row_text
                     for a_tag in tr.find_all("a", href=True):
                         mid = _extract_query_int(a_tag["href"], "id")
                         if mid:
