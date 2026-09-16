@@ -184,12 +184,11 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
         
         for elem in dash_soup.find_all(string=re.compile(r"Active Class", re.I)):
             card = elem.find_parent("div")
-            for _ in range(5):
-                if card and "Attendance:" in card.get_text():
-                    if card.parent and len(card.parent.get_text()) < 500:
-                        card = card.parent
+            for _ in range(8):
+                if card.parent and len(card.parent.get_text()) < 800:
+                    card = card.parent
+                else:
                     break
-                if card: card = card.parent
                 
             if not card: continue
             
@@ -199,12 +198,12 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
             course_name = strings[0]
             full_text = " ".join(strings)
             
-            att_match = re.search(r"Attendance:\s*([\d\.]+)%", full_text, re.I)
+            att_match = re.search(r"Attendance[:\s]*([\d\.]+)", full_text, re.I) or re.search(r"Active Class\s*([\d\.]+)", full_text, re.I)
             attendance_val = float(att_match.group(1)) if att_match else 0.0
             
-            term_match = re.search(r"Attendance:\s*[\d\.]+%\s*(Fall\s*\d+|Spring\s*\d+|Summer\s*\d+)", full_text, re.I)
+            term_match = re.search(r"(Fall|Spring|Summer)\s*\d{4}", full_text, re.I)
             if term_match:
-                active_term = term_match.group(1).strip()
+                active_term = term_match.group(0).strip()
                 
             key = _slugify(course_name) or course_name
             active_courses[key] = {
@@ -373,8 +372,12 @@ def _fetch_lms_data(session: Any, dashboard_html: str) -> Dict[str, Any]:
             seen_pairs.add(dedupe_key)
             activities.append(activity)
 
+    timeline_items = _fetch_lms_timeline_events(session, sesskey) if sesskey else []
+    if not timeline_items:
+        timeline_items = _fetch_lms_timeline_items(dashboard_soup)
+
     if not activities:
-        activities = _fetch_lms_timeline_items(dashboard_soup)
+        activities = timeline_items
 
     user_name = "NUST Student"
     user_text_el = dashboard_soup.find(class_="usertext")
@@ -398,7 +401,8 @@ def _fetch_lms_data(session: Any, dashboard_html: str) -> Dict[str, Any]:
         "summary": summary,
         "courses": courses,
         "activities": activities,
-        "items": activities,
+        "items": timeline_items if timeline_items else activities,
+        "timeline": timeline_items,
         "legacy_quests": activities,
         "source": "moodle",
     }
@@ -540,11 +544,35 @@ def _extract_lms_courses_from_dashboard(soup: BeautifulSoup) -> List[Dict[str, A
 
 
 def _scrape_lms_course(session: Any, course: Dict[str, Any], course_url: str) -> Dict[str, Any]:
-    response = session.get(course_url, timeout=30, verify=False)
-    soup = BeautifulSoup(response.text, "html.parser")
     course_name = course.get("name") or course.get("shortname") or "NUST LMS"
     activities: List[Dict[str, Any]] = []
     seen_keys = set()
+    
+    # Check assignment status table
+    assign_statuses = {}
+    course_id = course.get("id")
+    if course_id:
+        try:
+            ai_res = session.get(f"{LMS_BASE}/mod/assign/index.php?id={course_id}", timeout=15, verify=False)
+            ai_soup = BeautifulSoup(ai_res.text, "html.parser")
+            for tr in ai_soup.find_all("tr"):
+                cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
+                if len(cells) >= 3:
+                    due_val = cells[1]
+                    sub_val = cells[-1].lower()
+                    is_sub = "submitted" in sub_val
+                    for a_tag in tr.find_all("a", href=True):
+                        mid = _extract_query_int(a_tag["href"], "id")
+                        if mid:
+                            assign_statuses[mid] = {
+                                "status": "Submitted" if is_sub else "Open",
+                                "due_date": due_val
+                            }
+        except Exception:
+            pass
+
+    response = session.get(course_url, timeout=30, verify=False)
+    soup = BeautifulSoup(response.text, "html.parser")
 
     for link in soup.find_all("a", href=True):
         href = link["href"].strip()
@@ -568,6 +596,13 @@ def _scrape_lms_course(session: Any, course: Dict[str, Any], course_url: str) ->
             title = f"{module_type.title()} item"
 
         url = href if href.startswith("http") else urljoin(LMS_BASE, href)
+        
+        assign_info = assign_statuses.get(module_id) if module_type == "assignment" else None
+        is_sub = (assign_info.get("status") == "Submitted") if assign_info else False
+        status = "Submitted" if is_sub else "Open"
+        action_label = "Submitted" if is_sub else _action_label_for_module(module_type)
+        due_date = assign_info.get("due_date") if assign_info else "N/A"
+
         activities.append(
             {
                 "type": module_type,
@@ -580,7 +615,9 @@ def _scrape_lms_course(session: Any, course: Dict[str, Any], course_url: str) ->
                 "openable": True,
                 "submission_capable": module_type == "assignment",
                 "quiz_capable": module_type == "quiz",
-                "action_label": _action_label_for_module(module_type),
+                "status": status,
+                "due_date": due_date,
+                "action_label": action_label,
                 "kind_label": _kind_label_for_module(module_type),
                 "section": _extract_section_name(link),
             }
@@ -594,6 +631,55 @@ def _scrape_lms_course(session: Any, course: Dict[str, Any], course_url: str) ->
     }
 
     return {"activities": activities, "summary": summary}
+
+
+def _fetch_lms_timeline_events(session: Any, sesskey: Optional[str]) -> List[Dict[str, Any]]:
+    if not sesskey:
+        return []
+    payload = [{
+        "index": 0,
+        "methodname": "core_calendar_get_action_events_by_timesort",
+        "args": {"timesortfrom": 0, "limitnum": 20}
+    }]
+    try:
+        res = session.post(
+            f"{LMS_AJAX_URL}?sesskey={sesskey}&info=core_calendar_get_action_events_by_timesort",
+            json=payload,
+            timeout=20,
+            verify=False
+        )
+        data = res.json()
+        events = data[0].get("data", {}).get("events", []) if isinstance(data, list) and data else []
+        timeline_items = []
+        for e in events:
+            raw_time = e.get("formattedtime", "")
+            time_soup = BeautifulSoup(raw_time, "html.parser")
+            clean_due = time_soup.get_text(" ", strip=True) or "Upcoming"
+            
+            action = e.get("action", {})
+            action_name = action.get("name", "")
+            actionable = action.get("actionable", True)
+            
+            is_submitted = (not actionable) or ("view" in action_name.lower()) or ("submitted" in action_name.lower())
+            status = "Submitted" if is_submitted else "Open"
+            action_label = "Submitted" if is_submitted else "Submit"
+            
+            timeline_items.append({
+                "type": "assignment" if e.get("modulename") == "assign" else (e.get("modulename") or "activity"),
+                "name": e.get("activityname") or e.get("name"),
+                "course": e.get("course", {}).get("fullname") or "Course",
+                "due_date": clean_due,
+                "status": status,
+                "url": e.get("url") or action.get("url") or "",
+                "openable": True,
+                "action_label": action_label,
+                "kind_label": "ASSIGNMENT",
+                "source": "timeline"
+            })
+        return timeline_items
+    except Exception as exc:
+        print("Timeline fetch error:", exc)
+        return []
 
 
 def _fetch_lms_timeline_items(soup: BeautifulSoup) -> List[Dict[str, Any]]:

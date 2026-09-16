@@ -101,9 +101,13 @@ export default function LMSSubjectDetailsPage() {
                   <div className="flex-shrink-0 btn-primary w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md">
                     <Download size={20} strokeWidth={2.5} />
                   </div>
+                ) : (activity.status === 'Submitted' || activity.action_label === 'Submitted') ? (
+                  <div className="flex-shrink-0 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700 px-4 py-2 rounded-lg font-bold text-sm shadow-sm flex items-center gap-1.5">
+                    <CheckCircle size={16} /> Submitted
+                  </div>
                 ) : (
                   <div className="flex-shrink-0 btn-primary px-4 py-2 rounded-lg font-bold text-sm text-white shadow-md">
-                    {activity.action_label}
+                    {activity.action_label || "Submit"}
                   </div>
                 )}
               </a>
