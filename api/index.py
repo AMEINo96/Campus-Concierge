@@ -276,20 +276,31 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                                         pass
                     except Exception: pass
                     
+                streak = 0
                 if att_url:
                     try:
                         att_res = session.get(f"{QALAM_BASE}{att_url}", timeout=30)
                         att_soup = BeautifulSoup(att_res.text, "html.parser")
+                        records = []
                         for table in att_soup.find_all("table"):
                             for tr in table.find_all("tr"):
                                 cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
                                 if len(cells) >= 3 and cells[0] != "Sr. no":
-                                    total_classes += 1
-                                    if "Present" in cells[2] or "Late" in cells[2]:
-                                        attended += 1
+                                    records.append({"date": cells[1], "status": cells[2]})
+                        
+                        total_classes = len(records)
+                        attended = sum(1 for r in records if "Present" in r["status"] or "Late" in r["status"])
+                        
+                        # Sort by date descending to find streak
+                        records.sort(key=lambda x: x["date"], reverse=True)
+                        for r in records:
+                            if "Present" in r["status"] or "Late" in r["status"]:
+                                streak += 1
+                            else:
+                                break
                     except Exception: pass
                     
-                return ckey, assessments, total_classes, attended
+                return ckey, assessments, total_classes, attended, streak
 
             # Combine links by course
             courses_map = {}
@@ -306,10 +317,11 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                 results = executor.map(lambda p: fetch_gb_and_att(*p), tasks)
                 for res in results:
                     if res:
-                        ckey, assessments, total_classes, attended = res
+                        ckey, assessments, total_classes, attended, streak = res
                         if assessments: active_courses[ckey]["assessments"] = assessments
                         active_courses[ckey]["total_classes"] = total_classes
                         active_courses[ckey]["attended_classes"] = attended
+                        active_courses[ckey]["streak"] = streak
         except Exception as e:
             print("Failed fetching active marks/att:", e)
             

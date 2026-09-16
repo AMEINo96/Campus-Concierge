@@ -71,7 +71,7 @@ export default function PortalDashboardPage() {
               </h2>
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <p className="text-[28px] font-bold text-white leading-[1.3]">
+                  <p className="text-xl font-bold text-white leading-[1.3]">
                     {degreeName}
                   </p>
                   <p className="text-base text-[#BFDBFE] mt-1">
@@ -91,14 +91,14 @@ export default function PortalDashboardPage() {
                 <p className="text-[12px] font-semibold text-[#93C5FD] uppercase tracking-widest mb-1">
                   CGPA
                 </p>
-                <p className="text-[28px] font-bold text-white">{qalamLoading ? "..." : cgpa}</p>
+                <p className="text-xl font-bold text-white">{qalamLoading ? "..." : cgpa}</p>
               </div>
               <div className="flex-1 bg-white/10 backdrop-blur-md p-5 rounded-xl border border-white/20 flex items-center justify-between shadow-sm dark:shadow-none">
                 <div>
                   <p className="text-[12px] font-semibold text-[#93C5FD] uppercase tracking-widest mb-1">
                     Completion
                   </p>
-                  <p className="text-[28px] font-bold text-white">{qalamLoading ? "..." : completion}</p>
+                  <p className="text-xl font-bold text-white">{qalamLoading ? "..." : completion}</p>
                 </div>
                 <div className="relative w-12 h-12 flex-shrink-0">
                   <svg className="w-full h-full transform -rotate-90 drop-shadow-md dark:drop-shadow-none" viewBox="0 0 36 36">
@@ -131,15 +131,15 @@ export default function PortalDashboardPage() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Link href="/portal/lms" className="flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-blue-100 hover:border-blue-500 hover:shadow-md hover:shadow-blue-100/50 dark:hover:bg-blue-900/40 dark:hover:border-blue-500 group">
-                <BookOpen size={32} strokeWidth={2} className="mb-3 text-[#1E3A8A] dark:text-[#93C5FD] group-hover:text-blue-600 group-hover:scale-110 transition-all" />
+                <BookOpen size={24} strokeWidth={2} className="mb-3 text-[#1E3A8A] dark:text-[#93C5FD] group-hover:text-blue-600 group-hover:scale-110 transition-all" />
                 <span className="text-base font-semibold text-center text-slate-900 dark:text-white">My Courses (LMS)</span>
               </Link>
               <Link href="/portal/makeup" className="flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-purple-100 hover:border-purple-500 hover:shadow-md hover:shadow-purple-100/50 dark:hover:bg-purple-900/40 dark:hover:border-purple-500 group">
-                <CalendarClock size={32} strokeWidth={2} className="mb-3 text-[#6D28D9] dark:text-[#A78BFA] group-hover:text-purple-600 group-hover:scale-110 transition-all" />
+                <CalendarClock size={24} strokeWidth={2} className="mb-3 text-[#6D28D9] dark:text-[#A78BFA] group-hover:text-purple-600 group-hover:scale-110 transition-all" />
                 <span className="text-base font-semibold text-center text-slate-900 dark:text-white">Make-up classes</span>
               </Link>
               <Link href="/portal/qalam" className="flex flex-col items-center justify-center p-6 border border-slate-200 dark:border-slate-600 rounded-xl bg-white dark:bg-slate-700/50 transition-all duration-200 ease-in-out hover:scale-[1.02] active:scale-[0.98] hover:bg-emerald-100 hover:border-emerald-500 hover:shadow-md hover:shadow-emerald-100/50 dark:hover:bg-emerald-900/40 dark:hover:border-emerald-500 group">
-                <GraduationCap size={32} strokeWidth={2} className="mb-3 text-[#047857] dark:text-[#34D399] group-hover:text-emerald-600 group-hover:scale-110 transition-all" />
+                <GraduationCap size={24} strokeWidth={2} className="mb-3 text-[#047857] dark:text-[#34D399] group-hover:text-emerald-600 group-hover:scale-110 transition-all" />
                 <span className="text-base font-semibold text-center text-slate-900 dark:text-white">Qalam</span>
               </Link>
             </div>
@@ -166,7 +166,7 @@ export default function PortalDashboardPage() {
             
             {!lmsLoading && deadlines.length > 0 && (
               <div className="space-y-4">
-                {deadlines.map((item: any, idx: number) => {
+                {deadlines.slice(0, 4).map((item: any, idx: number) => {
                   const isSubmitted = item.status === 'Submitted' || item.action_label === 'Submitted';
                   return (
                   <div key={idx} className={`flex items-center justify-between p-5 border border-slate-200 dark:border-slate-600 rounded-xl hover:border-${item.type === 'assignment' ? '[#FACC15]' : '[#3B82F6]'} transition-colors ${isSubmitted ? 'bg-emerald-50/50 dark:bg-emerald-900/10 opacity-75' : 'bg-white dark:bg-slate-700/50 hover:bg-slate-50 dark:hover:bg-slate-700'}`}>

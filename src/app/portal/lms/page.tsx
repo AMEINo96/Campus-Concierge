@@ -14,9 +14,9 @@ export default function LMSPage() {
   return (
     <>
       <TopBar title="LMS Workspace" showBack={true} backHref="/portal" />
-      <main className="w-full max-w-4xl mx-auto px-6 py-12 pb-32 flex flex-col gap-6">
+      <main className="w-full max-w-4xl mx-auto px-4 py-6 pb-24 flex flex-col gap-6">
         <section className="mb-6 text-center md:text-left">
-          <h2 className="text-4xl font-bold text-[#0F172A] mb-2 tracking-tight">My Courses</h2>
+          <h2 className="text-3xl font-bold text-[#0F172A] mb-2 tracking-tight">My Courses</h2>
           <p className="text-lg text-[#64748B]">Access your lecture slides, lab manuals, and assignments.</p>
         </section>
 
