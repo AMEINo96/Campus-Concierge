@@ -225,31 +225,43 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                     if n_span:
                         gradebook_links.append({"name": n_span.get_text(strip=True), "url": a["href"]})
             
-            for gl in gradebook_links:
+            import concurrent.futures
+            
+            def fetch_gb(gl):
                 ckey = _slugify(gl["name"]) or gl["name"]
                 if ckey in active_courses:
-                    gb_res = session.get(f"{QALAM_BASE}{gl['url']}", timeout=30)
-                    gb_soup = BeautifulSoup(gb_res.text, "html.parser")
-                    assessments = []
-                    for table in gb_soup.find_all("table"):
-                        headers = []
-                        for tr in table.find_all("tr"):
-                            cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
-                            if not cells: continue
-                            if cells[0] == "Assessment" and len(cells) >= 5:
-                                headers = cells
-                                continue
-                            if headers and len(cells) >= 5 and cells[0] != "Assessment":
-                                try:
-                                    assessments.append({
-                                        "name": cells[0],
-                                        "max_marks": float(cells[1] or 0),
-                                        "obtained_marks": float(cells[2] or 0),
-                                        "class_average": float(cells[3] or 0)
-                                    })
-                                except Exception:
-                                    pass
-                    if assessments:
+                    try:
+                        gb_res = session.get(f"{QALAM_BASE}{gl['url']}", timeout=30)
+                        gb_soup = BeautifulSoup(gb_res.text, "html.parser")
+                        assessments = []
+                        for table in gb_soup.find_all("table"):
+                            headers = []
+                            for tr in table.find_all("tr"):
+                                cells = [c.get_text(" ", strip=True) for c in tr.find_all(["th", "td"])]
+                                if not cells: continue
+                                if cells[0] == "Assessment" and len(cells) >= 5:
+                                    headers = cells
+                                    continue
+                                if headers and len(cells) >= 5 and cells[0] != "Assessment":
+                                    try:
+                                        assessments.append({
+                                            "name": cells[0],
+                                            "max_marks": float(cells[1] or 0),
+                                            "obtained_marks": float(cells[2] or 0),
+                                            "class_average": float(cells[3] or 0)
+                                        })
+                                    except Exception:
+                                        pass
+                        if assessments:
+                            return ckey, assessments
+                    except Exception as e:
+                        print("Error fetching gradebook:", e)
+                return None, None
+                
+            with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
+                results = executor.map(fetch_gb, gradebook_links)
+                for ckey, assessments in results:
+                    if ckey:
                         active_courses[ckey]["assessments"] = assessments
         except Exception as e:
             print("Failed fetching active marks:", e)
@@ -273,11 +285,19 @@ def _fetch_qalam_data(session: curl_requests.Session) -> Dict[str, Any]:
                 })
                 
         user_name = "NUST Student"
-        reg_span = dash_soup.find(string=re.compile(r'^\s*\d{10,}\s*$'))
+        reg_span = dash_soup.find(string=re.compile(r'^\s*(?:\d{6,}|\d{4}-\w+-\w+-\d+)\s*$'))
         if reg_span and reg_span.parent and reg_span.parent.find_previous_sibling():
             extracted_name = reg_span.parent.find_previous_sibling().get_text(strip=True).title()
-            if extracted_name:
+            if extracted_name and len(extracted_name) > 3:
                 user_name = extracted_name
+        else:
+            # Fallback to finding md-list-heading inside a user box
+            user_headings = dash_soup.find_all("span", class_="md-list-heading")
+            for h in user_headings:
+                text = h.get_text(strip=True)
+                if text and len(text.split()) >= 2 and not any(k in text.lower() for k in ["class", "attendance", "date", "term", "gpa"]):
+                    user_name = text.title()
+                    break
             
     except Exception as e:
         print(f"Failed to parse dashboard: {e}")
@@ -384,28 +404,34 @@ def _fetch_lms_data(session: Any, dashboard_html: str) -> Dict[str, Any]:
     activities: List[Dict[str, Any]] = []
     seen_pairs = set()
 
-    for course in courses:
+    import concurrent.futures
+
+    def fetch_single_course(course):
         course_id = course.get("id")
         course_url = course.get("viewurl") or (
             f"{LMS_BASE}/course/view.php?id={course_id}" if course_id else ""
         )
         if not course_url:
-            continue
+            return None
+        return _scrape_lms_course(session, course, course_url)
 
-        course_detail = _scrape_lms_course(session, course, course_url)
-        course["summary"] = course_detail["summary"]
-        course["lecture_count"] = course_detail["summary"]["lecture_count"]
-        course["assignment_count"] = course_detail["summary"]["assignment_count"]
-        course["quiz_count"] = course_detail["summary"]["quiz_count"]
-        course["resource_count"] = course_detail["summary"]["lecture_count"]
-        course["content_count"] = course_detail["summary"]["content_count"]
+    with concurrent.futures.ThreadPoolExecutor(max_workers=6) as executor:
+        results = executor.map(fetch_single_course, courses)
+        for course, course_detail in zip(courses, results):
+            if not course_detail: continue
+            course["summary"] = course_detail["summary"]
+            course["lecture_count"] = course_detail["summary"]["lecture_count"]
+            course["assignment_count"] = course_detail["summary"]["assignment_count"]
+            course["quiz_count"] = course_detail["summary"]["quiz_count"]
+            course["resource_count"] = course_detail["summary"]["lecture_count"]
+            course["content_count"] = course_detail["summary"]["content_count"]
 
-        for activity in course_detail["activities"]:
-            dedupe_key = (activity.get("type"), activity.get("module_id") or activity.get("url"))
-            if dedupe_key in seen_pairs:
-                continue
-            seen_pairs.add(dedupe_key)
-            activities.append(activity)
+            for activity in course_detail["activities"]:
+                dedupe_key = (activity.get("type"), activity.get("module_id") or activity.get("url"))
+                if dedupe_key in seen_pairs:
+                    continue
+                seen_pairs.add(dedupe_key)
+                activities.append(activity)
 
     timeline_items = _fetch_lms_timeline_events(session, sesskey) if sesskey else []
     if not timeline_items:
@@ -418,9 +444,16 @@ def _fetch_lms_data(session: Any, dashboard_html: str) -> Dict[str, Any]:
     user_text_el = dashboard_soup.find(class_="usertext")
     if user_text_el:
         user_name = user_text_el.get_text(" ", strip=True)
-    elif dashboard_soup.find("span", class_="userbutton"):
+    else:
         userbutton = dashboard_soup.find("span", class_="userbutton")
-        user_name = userbutton.get_text(" ", strip=True)
+        if userbutton:
+            user_name = userbutton.get_text(" ", strip=True)
+        else:
+            img_avatar = dashboard_soup.find("img", alt=re.compile(r"^Picture of\s+(.*)", re.I))
+            if img_avatar:
+                match = re.search(r"^Picture of\s+(.*)", img_avatar.get("alt", ""), re.I)
+                if match:
+                    user_name = match.group(1).strip()
 
     summary = {
         "course_count": len(courses),

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 export function useCredentials() {
   const [creds, setCreds] = useState({ user: "", password: "" });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -11,24 +12,32 @@ export function useCredentials() {
         user: localStorage.getItem("nust_user") || "",
         password: localStorage.getItem("nust_pass") || "",
       });
+      setIsLoaded(true);
     }
   }, []);
 
-  const saveCreds = (user: string, pass: string) => {
-    localStorage.setItem("nust_user", user);
-    localStorage.setItem("nust_pass", pass);
+  const saveCreds = (user: string, pass: string, remember: boolean = true) => {
+    if (remember) {
+      localStorage.setItem("nust_user", user);
+      localStorage.setItem("nust_pass", pass);
+    } else {
+      sessionStorage.setItem("nust_user", user);
+      sessionStorage.setItem("nust_pass", pass);
+    }
     setCreds({ user, password: pass });
   };
 
   const clearCreds = () => {
     localStorage.removeItem("nust_user");
     localStorage.removeItem("nust_pass");
+    sessionStorage.removeItem("nust_user");
+    sessionStorage.removeItem("nust_pass");
     localStorage.removeItem("qalam_cache");
     localStorage.removeItem("lms_cache");
     setCreds({ user: "", password: "" });
   };
 
-  return { creds, saveCreds, clearCreds };
+  return { creds, isLoaded, saveCreds, clearCreds };
 }
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";

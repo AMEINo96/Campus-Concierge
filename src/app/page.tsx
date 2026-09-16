@@ -9,7 +9,8 @@ import { useCredentials } from "@/lib/useBackend";
 export default function LoginPage() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
-  const { creds, saveCreds } = useCredentials();
+  const { creds, isLoaded, saveCreds } = useCredentials();
+  const [remember, setRemember] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -20,9 +21,13 @@ export default function LoginPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    saveCreds(user, password);
+    saveCreds(user, password, remember);
     router.push("/portal");
   };
+
+  if (!isLoaded || (creds.user && creds.password)) {
+    return <main className="w-full flex-grow flex items-center justify-center p-6"><div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div></main>;
+  }
 
   return (
     <main className="w-full flex-grow flex items-center justify-center p-6">
@@ -102,6 +107,19 @@ export default function LoginPage() {
               >
                 Forgot Password?
               </Link>
+            </div>
+            
+            <div className="flex items-center gap-2 mt-2">
+              <input 
+                type="checkbox" 
+                id="remember" 
+                checked={remember}
+                onChange={(e) => setRemember(e.target.checked)}
+                className="w-4 h-4 rounded border-slate-300 text-[#1E3A8A] focus:ring-[#1E3A8A]"
+              />
+              <label htmlFor="remember" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+                Remember me and auto-login
+              </label>
             </div>
 
             <button

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowLeft, Bell, Menu, X, LayoutDashboard, Home, Bot } from "lucide-react";
+import { ArrowLeft, Menu, X, LayoutDashboard, Home, Bot } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TopBarProps {
@@ -15,7 +15,7 @@ interface TopBarProps {
 export default function TopBar({ title, showBack = false, backHref = "#" }: TopBarProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  
 
   const isPortal = pathname?.startsWith("/portal");
   const isS3C = pathname?.startsWith("/s3c") || pathname === "/inbox" || pathname === "/requests" || pathname === "/profile";
@@ -48,26 +48,9 @@ export default function TopBar({ title, showBack = false, backHref = "#" }: TopB
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex gap-8">
-          {isPortal && (
-            <>
-              <Link href="/portal" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname === "/portal" ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Portal</Link>
-              <Link href="/portal/lms" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname?.includes("/lms") ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>LMS</Link>
-              <Link href="/portal/qalam" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname?.includes("/qalam") ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Qalam</Link>
-            </>
-          )}
-          {isS3C && (
-            <>
-              <Link href="/s3c" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname === "/s3c" ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Home</Link>
-              <Link href="/requests" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname === "/requests" ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Requests</Link>
-              <Link href="/inbox" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname === "/inbox" ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Inbox</Link>
-            </>
-          )}
-          {pathname?.startsWith("/gateway") && (
-            <>
-              <Link href="/gateway/profile" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname === "/gateway/profile" ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Profile</Link>
-              <Link href="/gateway/settings" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname === "/gateway/settings" ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Settings</Link>
-            </>
-          )}
+          <Link href="/portal" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname === "/portal" ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Portal</Link>
+          <Link href="/portal/lms" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname?.includes("/lms") ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>LMS</Link>
+          <Link href="/portal/qalam" className={`px-3 py-2 text-sm font-semibold tracking-wide ${pathname?.includes("/qalam") ? "text-white border-b-2 border-white" : "text-[#93C5FD] hover:text-white transition-colors"}`}>Qalam</Link>
         </nav>
 
         {/* Mobile Title (Centered) — clean text only, no icon wrapper */}
@@ -78,51 +61,7 @@ export default function TopBar({ title, showBack = false, backHref = "#" }: TopB
         </div>
 
         <div className="flex items-center gap-4">
-          <div className="relative">
-            <button 
-              onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-              className="text-white hover:text-[#93C5FD] transition-colors flex items-center justify-center w-10 h-10 relative"
-            >
-              <Bell size={20} strokeWidth={2.5} />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-[#0A2540]"></span>
-            </button>
-            
-            <AnimatePresence>
-              {isNotificationsOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute top-12 right-0 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 overflow-hidden z-50 text-left"
-                >
-                  <div className="p-4 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-800/80">
-                    <h3 className="font-bold text-slate-900 dark:text-white">Notifications</h3>
-                    <span className="text-xs font-bold text-white bg-red-500 px-2 py-0.5 rounded-full">3 New</span>
-                  </div>
-                  <div className="flex flex-col max-h-80 overflow-y-auto">
-                    <div className="p-4 border-b border-slate-100 dark:border-slate-700 hover:bg-blue-50/50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer relative">
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">New slides uploaded</p>
-                      <p className="text-xs text-slate-500 mt-1">CS-211 • 2 hours ago</p>
-                    </div>
-                    <div className="p-4 border-b border-slate-100 dark:border-slate-700 hover:bg-blue-50/50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer relative">
-                      <div className="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Quiz marks uploaded</p>
-                      <p className="text-xs text-slate-500 mt-1">AI-301 • 5 hours ago</p>
-                    </div>
-                    <div className="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer relative opacity-60">
-                      <p className="text-sm font-semibold text-slate-900 dark:text-white">Your request has been approved</p>
-                      <p className="text-xs text-slate-500 mt-1">Hostel Maintenance • 1 day ago</p>
-                    </div>
-                  </div>
-                  <div className="p-3 border-t border-slate-100 dark:border-slate-700 text-center bg-slate-50 dark:bg-slate-800/80">
-                    <button className="text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">Mark all as read</button>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+          
           
           <div className="w-8 h-8 rounded-full bg-[#1E3A8A] flex items-center justify-center overflow-hidden border-2 border-white/30 hidden md:block cursor-pointer hover:border-white transition-colors shrink-0">
             <img
@@ -172,30 +111,12 @@ export default function TopBar({ title, showBack = false, backHref = "#" }: TopB
                 <span className="text-xs text-[#64748B] dark:text-slate-400 font-bold uppercase tracking-widest mb-2 mt-4 px-2">Navigate</span>
                 
                 <Link 
-                  href="/gateway" 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-[#EFF6FF] dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200 hover:text-[#3B82F6] transition-colors font-semibold"
-                >
-                  <Home size={24} />
-                  Gateway Hub
-                </Link>
-
-                <Link 
                   href="/portal" 
                   onClick={() => setIsMenuOpen(false)}
                   className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-[#EFF6FF] dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200 hover:text-[#3B82F6] transition-colors font-semibold"
                 >
                   <LayoutDashboard size={24} />
                   Student Portal
-                </Link>
-
-                <Link 
-                  href="/s3c" 
-                  onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-4 px-4 py-3 rounded-xl hover:bg-[#EFF6FF] dark:hover:bg-slate-800 text-slate-900 dark:text-slate-200 hover:text-[#3B82F6] transition-colors font-semibold"
-                >
-                  <Bot size={24} />
-                  S3C Services
                 </Link>
               </div>
             </motion.div>
