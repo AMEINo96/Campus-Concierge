@@ -784,12 +784,14 @@ def _extract_sesskey(html: str) -> Optional[str]:
 
 def _module_type_from_href(href: str) -> Optional[str]:
     href_lower = href.lower()
-    if "/mod/resource/" in href_lower:
-        return "resource"
-    if "/mod/assign/" in href_lower:
-        return "assignment"
-    if "/mod/quiz/" in href_lower:
-        return "quiz"
+    if "/mod/resource/" in href_lower: return "resource"
+    if "/mod/assign/" in href_lower: return "assignment"
+    if "/mod/quiz/" in href_lower: return "quiz"
+    if "/mod/forum/" in href_lower: return "forum"
+    if "/mod/page/" in href_lower: return "page"
+    if "/mod/folder/" in href_lower: return "folder"
+    if "/mod/url/" in href_lower: return "url"
+    if "/mod/" in href_lower: return "activity"
     return None
 
 
@@ -806,19 +808,21 @@ def _infer_activity_type_from_text(href: str, text: str) -> str:
 
 
 def _action_label_for_module(module_type: str) -> str:
-    if module_type == "assignment":
-        return "Open / Submit"
-    if module_type == "quiz":
-        return "Take Quiz"
-    return "Open File"
+    if module_type == "assignment": return "Open / Submit"
+    if module_type == "quiz": return "Take Quiz"
+    if module_type == "resource": return "Open File"
+    return "Open"
 
 
 def _kind_label_for_module(module_type: str) -> str:
-    if module_type == "assignment":
-        return "ASSIGNMENT"
-    if module_type == "quiz":
-        return "QUIZ"
-    return "LECTURE FILE"
+    if module_type == "assignment": return "ASSIGNMENT"
+    if module_type == "quiz": return "QUIZ"
+    if module_type == "resource": return "LECTURE FILE"
+    if module_type == "forum": return "ANNOUNCEMENT / FORUM"
+    if module_type == "page": return "PAGE"
+    if module_type == "folder": return "FOLDER"
+    if module_type == "url": return "LINK"
+    return "ACTIVITY"
 
 
 def _extract_section_name(link) -> Optional[str]:
